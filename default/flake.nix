@@ -18,6 +18,7 @@
     devShells = forEachSystem (system: {
       default = pkgs.${system}.mkShell {
         packages = with pkgs.${system}; [
+          hello
         ];
       };
     });
@@ -29,7 +30,7 @@
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.default}/bin/hello";
+        program = "${self.packages.${system}.default}/bin/hello";
       };
     });
   };
