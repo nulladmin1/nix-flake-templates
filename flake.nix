@@ -11,6 +11,10 @@
     pkgs = forEachSystem (system: import nixpkgs {inherit system;});
   in {
     templates = {
+      default = {
+        description = "Nix Flake Template for Development";
+        path = ./default;
+      };
       python-poetry = {
         description = "Nix Flake Template for Python using Poetry";
         path = ./python-poetry;
