@@ -15,9 +15,7 @@
     forEachSystem = nixpkgs.lib.genAttrs systems;
     pkgs = forEachSystem (system: import nixpkgs {inherit system;});
   in {
-    formatter = forEachSystem (system: {
-      ${system} = pkgs.${system}.alejandra;
-    });
+    formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     devShells = forEachSystem (system: {
       default = pkgs.${system}.mkShell {
