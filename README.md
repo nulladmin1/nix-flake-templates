@@ -1,4 +1,7 @@
 # Nix Flake Templates
+
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
 A collection of Nix Flake Templates
 
 
