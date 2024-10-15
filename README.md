@@ -1,4 +1,7 @@
 # Nix Flake Templates
+
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org) [![forthebadge](https://forthebadge.com/images/badges/0-percent-optimized.svg)](https://forthebadge.com)
+
 A collection of Nix Flake Templates
 
 
@@ -45,7 +48,7 @@ nix develop
 nix fmt
 ```
 
-
+------------------
 ### Python (with Poetry and ```poetry2nix```)
 
 Initialize using
@@ -195,7 +198,7 @@ nix fmt
 		poetry run ${PROJECT_NAME}
 		```
 		where ${PROJECT_NAME} is the name of the project. Make sure it matches the name of the script in the ```pyproject.toml```
-		```toml
+		```
 		[tool.poetry.scripts]
 		${PROJECT_NAME} = "${PROJECT_DIR}.main:main"
 		```
