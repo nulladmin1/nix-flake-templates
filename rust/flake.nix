@@ -3,35 +3,34 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    crane.url = "github:ipetkov/crane";
+    naersk.url = "github:nix-community/naersk";
   };
 
   outputs = {
     self,
     nixpkgs,
-    fenix,
-    crane,
+    naersk,
   }: let
     systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
     forEachSystem = nixpkgs.lib.genAttrs systems;
-    pkgs = forEachSystem (system: import nixpkgs {inherit system;});
+    pkgs = forEachSystem (system: import nixpkgs {inherit system;}); 
+    naersk' = forEachSystem (system: pkgs.${system}.callPackage naersk {});
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     devShells = forEachSystem (system: {
       default = pkgs.${system}.mkShell {
         packages = with pkgs.${system}; [
-          hello
+          rustc
+          cargo
         ];
       };
     });
 
     packages = forEachSystem (system: {
-      default = pkgs.${system}.hello;
+      default = naersk'.buildPackage {
+        src = ./.;
+      }; 
     });
 
     apps = forEachSystem (system: {
