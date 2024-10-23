@@ -24,6 +24,10 @@
         description = "Nix Flake Template for Python using Poetry";
         path = ./python-poetry;
       };
+      rust-naersk = {
+        description = "Nix flake Template for Rust using Naersk";
+        path = ./rust;
+      };
     };
   };
 }
