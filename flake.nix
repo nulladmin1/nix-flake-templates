@@ -25,11 +25,16 @@
         path = ./python-poetry;
       };
       rust-naersk = {
-        description = "Nix flake Template for Rust using Naersk";
+        description = "Nix Flake Template for Rust using Naersk";
         path = ./rust;
+      };
+      cpp-cmake = {
+        description = "Nix Flake Template for C++ using CMake";
+        path = ./cpp;
       };
       python = templates.python-poetry;
       rust = templates.rust-naersk;
+      cpp = cpp-cmake;
     };
   };
 }
