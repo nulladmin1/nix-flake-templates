@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Development";
+  description = "Nix Flake Template for C++";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -18,13 +18,26 @@
     devShells = forEachSystem (system: {
       default = pkgs.${system}.mkShell {
         packages = with pkgs.${system}; [
-          hello
+          libllvm
+          cmake
+          gtest
         ];
       };
     });
 
     packages = forEachSystem (system: {
-      default = pkgs.${system}.hello;
+      default = pkgs.${system}.stdenv.mkDerivation {
+        pname = "cpp";
+        version = "0.1.0";
+        src = ./.;
+
+        nativeBuildInputs = with pkgs.${system}; [
+          cmake
+        ];
+        buildInputs = with pkgs.${system}; [
+          gtest
+        ];
+      };
     });
 
     apps = forEachSystem (system: {

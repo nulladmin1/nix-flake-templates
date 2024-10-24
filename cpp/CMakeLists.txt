@@ -5,3 +5,5 @@ project(hello)
 set(CMAKE_CXX_STANDARD 23)
 
 add_subdirectory(src)
+
+install(TARGETS hello DESTINATION bin)
