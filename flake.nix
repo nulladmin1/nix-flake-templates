@@ -34,7 +34,7 @@
       };
       python = templates.python-poetry;
       rust = templates.rust-naersk;
-      cpp = cpp-cmake;
+      cpp = templates.cpp-cmake;
     };
   };
 }
