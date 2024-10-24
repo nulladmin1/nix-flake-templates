@@ -81,23 +81,23 @@ nix fmt
 		```nix
 		{
 			description = "Nix Flake Template for Python using Poetry";
-		...
+		# ...
 		}	
 		```
 	* Change name of the Poetry Application (In this example, it's called app)
 		```nix
 		{
-		...
+		# ...
 			app = mkPoetryApplication {projectDir = ./.;};
-		...
+		# ...
 		}
 		```
 	* Change the name of the Poetry Application and the location of its binary (In this example, both are called app)
 		```nix
 		{
-		...		
+		# ...		
 			 program = "${app}/bin/app";
-		...	
+		# ...	
 		}
 		```
 * In ```pyproject.toml```
@@ -125,7 +125,7 @@ nix fmt
 		```
 * For the structure and code
 	* Rename the ```app/``` directory to the name of your project. Make sure its the same as the path in the ```pyproject.toml```
-		```shell
+		```
 		📦 python-poetry
 		├─ 📁 app
 		│  ├─ 🐍 __init__.py
@@ -145,11 +145,11 @@ nix fmt
 * Execution
 	* If running the project using ```Poetry```, run using:
 		```shell
-		poetry run ${PROJECT_NAME}
+		poetry run PROJECT_NAME
 		```
-		where ${PROJECT_NAME} is the name of the project. Make sure it matches the name of the script in the ```pyproject.toml```
+		where PROJECT_NAME is the name of the project. Make sure it matches the name of the script in the ```pyproject.toml```
 		```toml
 		[tool.poetry.scripts]
-		${PROJECT_NAME} = "${PROJECT_DIR}.main:main"
+		PROJECT_NAME = "PROJECT_DIR.main:main"
 		```
 		where ${PROJECT_NAME} is the name of the project, and the ${PROJECT_DIR} is the location of the project (recommended to be the same as the PROJECT_NAME). By default it's: ```app/```
