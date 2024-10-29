@@ -16,20 +16,40 @@
   }: let
     systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
     forEachSystem = nixpkgs.lib.genAttrs systems;
-    pkgs = forEachSystem (system: import nixpkgs {inherit system;});
+    pkgs = forEachSystem (system:
+      import nixpkgs {
+        inherit system;
+        overlays = [
+          (import "${builtins.fetchTree gomod2nix}/overlay.nix")
+        ];
+      });
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-    devShells = forEachSystem (system: {
+    devShells = forEachSystem (system: let
+      inherit (builtins) fromJSON readFile;
+      inherit ((fromJSON (readFile ./flake.lock)).nodes);
+      goEnv = pkgs.${system}.mkGoEnv {pwd = ./.;};
+    in {
       default = pkgs.${system}.mkShell {
         packages = with pkgs.${system}; [
-          hello
+          goEnv
+          gomod2nix
         ];
       };
     });
 
-    packages = forEachSystem (system: {
-      default = pkgs.${system}.hello;
+    packages = forEachSystem (system: let
+      inherit (builtins) fromJSON readFile;
+      inherit ((fromJSON (readFile ./flake.lock)).nodes);
+    in {
+      default = pkgs.${system}.buildGoApplication {
+        pname = "hello";
+        version = "0.1.0";
+        pwd = ./.;
+        src = ./.;
+        modules = ./gomod2nix.toml;
+      };
     });
 
     apps = forEachSystem (system: {
