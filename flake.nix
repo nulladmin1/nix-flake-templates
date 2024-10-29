@@ -32,9 +32,14 @@
         description = "Nix Flake Template for C++ using CMake";
         path = ./cpp;
       };
+      go-gomod2nix = {
+        description = "Nix Flake Template for Go using gomod2nix";
+        path = ./go;
+      };
       python = templates.python-poetry;
       rust = templates.rust-naersk;
       cpp = templates.cpp-cmake;
+      go = templates.go-gomod2nix;
     };
   };
 }
