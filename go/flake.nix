@@ -20,7 +20,7 @@
       import nixpkgs {
         inherit system;
         overlays = [
-          (import "${builtins.fetchTree gomod2nix}/overlay.nix")
+          gomod2nix.overlays.default
         ];
       });
   in {
@@ -34,7 +34,7 @@
       default = pkgs.${system}.mkShell {
         packages = with pkgs.${system}; [
           goEnv
-          gomod2nix
+          gomod2nix.packages.${system}.default
         ];
       };
     });
