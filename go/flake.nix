@@ -27,22 +27,17 @@
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     devShells = forEachSystem (system: let
-      inherit (builtins) fromJSON readFile;
-      inherit ((fromJSON (readFile ./flake.lock)).nodes);
       goEnv = pkgs.${system}.mkGoEnv {pwd = ./.;};
     in {
       default = pkgs.${system}.mkShell {
-        packages = with pkgs.${system}; [
+        packages = [
           goEnv
           gomod2nix.packages.${system}.default
         ];
       };
     });
 
-    packages = forEachSystem (system: let
-      inherit (builtins) fromJSON readFile;
-      inherit ((fromJSON (readFile ./flake.lock)).nodes);
-    in {
+    packages = forEachSystem (system: {
       default = pkgs.${system}.buildGoApplication {
         pname = "hello";
         version = "0.1.0";
@@ -55,7 +50,7 @@
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/hello";
+        program = "${self.packages.${system}.default}/bin/src";
       };
     });
   };
