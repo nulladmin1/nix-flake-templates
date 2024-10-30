@@ -29,8 +29,6 @@ or
 nix flake init --template "github:nulladmin1/nix-flake-templates#default"
 ```
 
-*All of this information is also included in the [README.md](./default/README.md) of the template*
-
 The flake is able to run in the specified systems listed in the flake. It contains a ```devShell``` as an output with ```hello```, a package that runs ```hello``` from Nixpkgs, and an app that runs the previously mentioned package.
 
 #### Run using Nix
@@ -55,8 +53,6 @@ Initialize using
 ```shell  
 nix flake init --template "github:nulladmin1/nix-flake-templates#python-poetry"
 ```
-
-*All of this information is also included in the [README.md](./poetry-python/README.md) of the template*
 
 This is how the structure of the template looks like:
 ```
@@ -281,9 +277,6 @@ nix fmt
   * Add necessary code into the ```src/``` directory
 
 ### C++ (with ```CMake```)
-
-
-*All of this information is also included in the [README.md](../README.md)*
 
 Initialize using
 ```shell  
