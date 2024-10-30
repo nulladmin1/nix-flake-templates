@@ -204,7 +204,6 @@ nix fmt
 		```
 		where ${PROJECT_NAME} is the name of the project, and the ${PROJECT_DIR} is the location of the project (recommended to be the same as the PROJECT_NAME). By default it's: ```app/```
 
-
 ### Rust (with ```Naersk```)
 
 Initialize using 
@@ -226,14 +225,14 @@ This is how to structure of the template looks like:
 
 It includes a really simple Hello World program
 
-### Run using ```naersk``` (Recommended)
+#### Run using ```naersk``` (Recommended)
 
 Run app
 ```shell
 nix run
 ```
 
-### Run using ```Cargo```
+#### Run using ```Cargo```
 
 Drop into a development shell
 ```shell
@@ -245,7 +244,7 @@ Run app
 cargo run
 ```
 
-### (Optional) Format ```flake.nix``` using ```Alejandra```
+#### (Optional) Format ```flake.nix``` using ```Alejandra```
 ```shelll
 nix fmt
 ```
@@ -280,3 +279,67 @@ nix fmt
   
 * For the structure and code
   * Add necessary code into the ```src/``` directory
+
+### C++ (with ```CMake```)
+
+
+*All of this information is also included in the [README.md](../README.md)*
+
+Initialize using
+```shell  
+nix flake init --template "github:nulladmin1/nix-flake-templates#cpp"
+```
+
+This is how the structure of the template looks like:
+```
+📦 cpp
+├─ 🔒 Cargo.lock
+├─ ⚙️ CMakeLists.txt
+├─ 🔒 flake.lock
+├─ ⚙️ flake.nix
+├─ 📁 src
+│  ├─ 📝 hello.cpp
+│  ├─ ⚙️ CMakeLists.txt
+├─ 🔨 Makefile
+├─ 📃 README.md
+ ```
+
+It includes a really simple Hello World program
+
+#### Run using Nix
+
+```shell
+nix run
+```
+
+#### Go into Development Shell
+```shell
+nix develop
+```
+
+#### (Optional) Format ```flake.nix``` using ```Alejandra```
+```shell
+nix fmt
+```
+
+#### To customize it to your own needs
+
+* In ```flake.nix```
+	* Edit description
+  ```nix
+    {
+        description = "Nix Flake Template for Python using Poetry";
+        # ...
+    }	
+    ``` 
+	* Change the name of the binary
+  ```nix
+       {
+      # ...		
+          program = "${self.packages.${system}.default}/bin/hello";
+      # ...	
+      }
+    ```
+* For the structure and code
+	* Add necessary code into the ```src/``` directory and configure CMake accordingly
+
