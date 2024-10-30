@@ -1,6 +1,6 @@
 # Nix Flake Template for Go using Gomod2nix
 
-*All of this information is also included in the [README.md](../README.md)*
+*All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)*
 
 Initialize using
 ```shell  
@@ -38,14 +38,14 @@ nix run
 nix develop
 ```
 
-#### (Optional) Format ```flake.nix``` using ```Alejandra```
+#### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
 
 ### To customize it to your own needs:
 
-* In ```flake.nix```
+* In [`flake.nix`](flake.nix)
   * Edit description
   ```nix
         {
@@ -63,7 +63,7 @@ nix fmt
                 modules = ./gomod2nix.toml;
             };
     ```
-* In ```go.mod```
+* In [`go.mod`](go.mod)
   * Change modules and Go version
   ```vgo
             module hello
@@ -71,7 +71,7 @@ nix fmt
     ```
 * For structure and code
   * Add necessary code for the program in the src/ directory. Reflect changes in ```go.mod```
-  * Generate new ```gomod2nix.toml``` by:
+  * Generate new [`gomod2nix.toml`](gomod2nix.toml) by:
     * Going into development shell
       ```shell
             nix develop

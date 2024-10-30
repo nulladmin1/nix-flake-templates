@@ -1,6 +1,6 @@
 # Nix Flake Template for Rust using Naersk
 
-*All of this information is also included in the [README.md](../README.md)*
+*All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)*
 
 Initialize using
 ```shell
@@ -40,31 +40,28 @@ Run app
 cargo run
 ```
 
-### (Optional) Format ```flake.nix``` using ```Alejandra```
+### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
 
 #### To customize it to your own needs
 
-* In ```flake.nix```
+* In [`flake.nix`](flake.nix)
     * Edit description
         ```nix
         {
             description = "Nix Flake Template for Python using Poetry";
-        # ...
         }	
         ``` 
     * Change the name of the binary
   ```nix
  	{
-	# ...		
         program = "${self.packages.${system}.default}/bin/hello";
-	# ...	
 	}
 	```
 
-* In ```Cargo.toml```
+* In [`Cargo.toml`](Cargo.toml)
     * Change name, version, edition, etc.
   ```toml
 		[package]
@@ -74,4 +71,4 @@ nix fmt
 	```
 
 * For the structure and code
-    * Add necessary code into the ```src/``` directory
+    * Add necessary code into the [`src/`](src) directory

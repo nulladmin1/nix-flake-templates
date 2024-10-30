@@ -1,6 +1,6 @@
 # Nix Flake Template for Python using Poetry
 
-*All this information is also included in the [README.md](../README.md)*
+*All this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)*
 
 
 Initialize using
@@ -25,7 +25,7 @@ This is how the structure of the template looks like:
  
  It includes a basic Poetry project that returns an SHA256 encoded string of the user's input. It has a testcase that can be run using ```Pytest``` or ```unittest```.
  
- The flake is able to run in the specified systems listed in the flake. It contains a ```devShel``` as an output with ```Python``` and ```Poetry```, and an app as an output that builds a ```Poetry``` project using ```poetry2nix```. This section is inspired by the [official docs for ```poetry2nix```](https://github.com/nix-community/poetry2nix)
+ The flake is able to run in the specified systems listed in the flake. It contains a ```devShells``` as an output with ```Python``` and ```Poetry```, and an app as an output that builds a ```Poetry``` project using ```poetry2nix```. This section is inspired by the [official docs for ```poetry2nix```](https://github.com/nix-community/poetry2nix)
 
 ### Run using ```poetry2nix``` (Recommended)
 
@@ -68,7 +68,7 @@ Run Pytest
 poetry run pytest
 ```
 
-### (Optional) Format ```flake.nix``` using ```Alejandra```
+### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
@@ -76,31 +76,26 @@ nix fmt
 
 ### To customize it to your own needs:
 
-* In ```flake.nix```
+* In [`flake.nix`](flake.nix)
 	* Edit description
 		```nix
 		{
 			description = "Nix Flake Template for Python using Poetry";
-		# ...
 		}	
 		```
 	* Change name of the Poetry Application (In this example, it's called app)
 		```nix
 		{
-		# ...
 			app = mkPoetryApplication {projectDir = ./.;};
-		# ...
 		}
 		```
 	* Change the name of the Poetry Application and the location of its binary (In this example, both are called app)
 		```nix
 		{
-		# ...		
 			 program = "${app}/bin/app";
-		# ...	
 		}
 		```
-* In ```pyproject.toml```
+* In [`pyproject.toml`](pyproject.toml)
 	* Change name, version, description, and authors of the project
 		```toml
 		[tool.poetry]
@@ -124,7 +119,7 @@ nix fmt
 		app = "app.main:main"
 		```
 * For the structure and code
-	* Rename the ```app/``` directory to the name of your project. Make sure its the same as the path in the ```pyproject.toml```
+	* Rename the [`app/`](app) directory to the name of your project. Make sure its the same as the path in the [`pyproject.toml`](pyproject.toml)
 		```
 		📦 python-poetry
 		├─ 📁 app
@@ -132,12 +127,12 @@ nix fmt
 		│  └─ 🐍 main.py
 		```
 	* Add necessary code for the program in the previous subdirectory. 
-	* Make sure that for the ```__init__.py```, that it imports from the name of your project, and it imports the necessary functions to be used as a library
+	* Make sure that for the [`__init__.py`](app/__init__.py), that it imports from the name of your project, and it imports the necessary functions to be used as a library
 		```python
 		from app.main import main, get_sha256
 		```
-	* Add necessary test cases and modifications in the ```tests/``` subdirectory. Prepend all added files in that subdirectory with ```test_```
-	* Make sure that for the ```test_main.py```, that it imports from the name of your project, and it imports the necessary functions for testing
+	* Add necessary test cases and modifications in the [`tests/`](tests) subdirectory. Prepend all added files in that subdirectory with ```test_```
+	* Make sure that for the [`test_main.py`](tests/test_main.py), that it imports from the name of your project, and it imports the necessary functions for testing
 		```python
 		from app.main import main, get_sha256
 		```
@@ -147,9 +142,9 @@ nix fmt
 		```shell
 		poetry run PROJECT_NAME
 		```
-		where PROJECT_NAME is the name of the project. Make sure it matches the name of the script in the ```pyproject.toml```
+		where PROJECT_NAME is the name of the project. Make sure it matches the name of the script in the [`pyproject.toml`](pyproject.toml)
 		```toml
 		[tool.poetry.scripts]
 		PROJECT_NAME = "PROJECT_DIR.main:main"
 		```
-		where ${PROJECT_NAME} is the name of the project, and the ${PROJECT_DIR} is the location of the project (recommended to be the same as the PROJECT_NAME). By default it's: ```app/```
+		where ${PROJECT_NAME} is the name of the project, and the ${PROJECT_DIR} is the location of the project (recommended to be the same as the PROJECT_NAME). By default it's: [`app/`](app)

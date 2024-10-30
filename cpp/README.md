@@ -1,6 +1,6 @@
 # Nix Flake Template for C++ using 
 
-*All of this information is also included in the [README.md](../README.md)*
+*All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)*
 
 Initialize using
 ```shell  
@@ -34,14 +34,14 @@ nix run
 nix develop
 ```
 
-#### (Optional) Format ```flake.nix``` using ```Alejandra```
+#### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
 ```shell
 nix fmt
 ```
 
 #### To customize it to your own needs
 
-* In ```flake.nix```
+* In [`flake.nix`](flake.nix)
   * Edit description
   ```nix
     {
@@ -58,4 +58,4 @@ nix fmt
       }
     ```
 * For the structure and code
-  * Add necessary code into the ```src/``` directory and configure CMake accordingly
+  * Add necessary code into the [`src/`](src) directory and configure CMake accordingly
