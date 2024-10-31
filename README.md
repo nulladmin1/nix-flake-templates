@@ -235,14 +235,14 @@ Run app
 cargo run
 ```
 
-#### (Optional) Format [`flake.nix`](rust/flake.nix) using ```Alejandra```
+#### (Optional) Format [`flake.nix`](rust-fenix-naersk/flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
 
 #### To customize it to your own needs
 
-* In [`flake.nix`](rust/flake.nix)
+* In [`flake.nix`](rust-fenix-naersk/flake.nix)
   * Edit description
       ```nix
       {
@@ -256,7 +256,7 @@ nix fmt
 	}
 	```
   
-* In [`Cargo.toml`](rust/flake.nix)
+* In [`Cargo.toml`](rust-fenix-naersk/flake.nix)
   * Change name, version, edition, etc. 
   ```toml
 		[package]
@@ -266,7 +266,7 @@ nix fmt
 	```
   
 * For the structure and code
-  * Add necessary code into the [`src/`](rust/src) directory
+  * Add necessary code into the [`src/`](rust-fenix-naersk/src) directory
 
 ### C++ (with ```CMake```)
 
@@ -302,14 +302,14 @@ nix run
 nix develop
 ```
 
-#### (Optional) Format [`flake.nix`](cpp/flake.nix) using ```Alejandra```
+#### (Optional) Format [`flake.nix`](cpp-cmake/flake.nix) using ```Alejandra```
 ```shell
 nix fmt
 ```
 
 #### To customize it to your own needs
 
-* In [`flake.nix`](cpp/flake.nix)
+* In [`flake.nix`](cpp-cmake/flake.nix)
 	* Edit description
   ```nix
     {
@@ -323,7 +323,7 @@ nix fmt
       }
     ```
 * For the structure and code
-	* Add necessary code into the [`src/`](cpp/src) directory and configure CMake accordingly
+	* Add necessary code into the [`src/`](cpp-cmake/src) directory and configure CMake accordingly
 
 ### Go (with ```gomod2nix```)
 
@@ -363,14 +363,14 @@ nix run
 nix develop
 ```
 
-#### (Optional) Format [`flake.nix`](go/flake.nix) using ```Alejandra```
+#### (Optional) Format [`flake.nix`](go-gomod2nix/flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
 
 #### To customize it to your own needs:
 
-* In [`flake.nix`](go/flake.nix)
+* In [`flake.nix`](go-gomod2nix/flake.nix)
 	* Edit description
       ```nix
         {
@@ -387,15 +387,15 @@ nix fmt
                 modules = ./gomod2nix.toml;
             };
         ```
-* In [`go.mod`](go/go.mod)
+* In [`go.mod`](go-gomod2nix/go.mod)
 	* Change modules and Go version
       ```vgo
             module hello
             go 1.22.7
       ```
 * For structure and code
-	* Add necessary code for the program in the src/ directory. Reflect changes in [`go.mod`](go/go.mod)
-	* Generate new [`gomod2nix.toml`](go/gomod2nix.toml) by:
+	* Add necessary code for the program in the src/ directory. Reflect changes in [`go.mod`](go-gomod2nix/go.mod)
+	* Generate new [`gomod2nix.toml`](go-gomod2nix/gomod2nix.toml) by:
 		* Going into development shell
 		  ```shell
                 nix develop
