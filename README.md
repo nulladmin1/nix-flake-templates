@@ -15,6 +15,8 @@ Where ```${LANG}``` is the supported language:
 
 - Default
 - Python (with Poetry and ```poetry2nix```)
+- Go (with ```gomod2nix```)
+- Rust (with ```fenix``` and ```naersk```)
 
 ## Available Templates
 
@@ -195,16 +197,20 @@ nix fmt
 		```
 		where ${PROJECT_NAME} is the name of the project, and the ${PROJECT_DIR} is the location of the project (recommended to be the same as the PROJECT_NAME). By default it's: [`app/`](python-poetry/app)
 
-### Rust (with ```Naersk```)
+### Rust (with ```Fenix``` and ```Naersk```)
 
 Initialize using 
 ```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#rust-naersk"
+nix flake init --template "github:nulladmin1/nix-flake-templates#rust-fenix-naersk"
+```
+OR
+```shell
+nix flake init --template "github:nulladmin1/nix-flake-templates#rust"
 ```
 
 This is how to structure of the template looks like:
 ```
-📦 rust
+📦 rust-fenix-naersk
 ├─ 🔒 Cargo.lock
 ├─ ⚙️ Cargo.toml
 ├─ 🔒 flake.lock
@@ -235,18 +241,18 @@ Run app
 cargo run
 ```
 
-#### (Optional) Format [`flake.nix`](rust/flake.nix) using ```Alejandra```
+#### (Optional) Format [`flake.nix`](rust-fenix-naersk/flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
 
 #### To customize it to your own needs
 
-* In [`flake.nix`](rust/flake.nix)
+* In [`flake.nix`](rust-fenix-naersk/flake.nix)
   * Edit description
       ```nix
       {
-          description = "Nix Flake Template for Python using Poetry";
+          description = "Nix Flake Template for Rust using Fenix and Naersk";
       }	
       ``` 
   * Change the name of the binary
@@ -256,7 +262,7 @@ nix fmt
 	}
 	```
   
-* In [`Cargo.toml`](rust/flake.nix)
+* In [`Cargo.toml`](rust-fenix-naersk/flake.nix)
   * Change name, version, edition, etc. 
   ```toml
 		[package]
@@ -266,10 +272,15 @@ nix fmt
 	```
   
 * For the structure and code
-  * Add necessary code into the [`src/`](rust/src) directory
+  * Add necessary code into the [`src/`](rust-fenix-naersk/src) directory
 
 ### C++ (with ```CMake```)
 
+Initialize using
+```shell  
+nix flake init --template "github:nulladmin1/nix-flake-templates#cpp-cmake"
+```
+OR
 Initialize using
 ```shell  
 nix flake init --template "github:nulladmin1/nix-flake-templates#cpp"
@@ -277,7 +288,7 @@ nix flake init --template "github:nulladmin1/nix-flake-templates#cpp"
 
 This is how the structure of the template looks like:
 ```
-📦 cpp
+📦 cpp-cmake
 ├─ 🔒 Cargo.lock
 ├─ ⚙️ CMakeLists.txt
 ├─ 🔒 flake.lock
@@ -302,14 +313,14 @@ nix run
 nix develop
 ```
 
-#### (Optional) Format [`flake.nix`](cpp/flake.nix) using ```Alejandra```
+#### (Optional) Format [`flake.nix`](cpp-cmake/flake.nix) using ```Alejandra```
 ```shell
 nix fmt
 ```
 
 #### To customize it to your own needs
 
-* In [`flake.nix`](cpp/flake.nix)
+* In [`flake.nix`](cpp-cmake/flake.nix)
 	* Edit description
   ```nix
     {
@@ -323,7 +334,7 @@ nix fmt
       }
     ```
 * For the structure and code
-	* Add necessary code into the [`src/`](cpp/src) directory and configure CMake accordingly
+	* Add necessary code into the [`src/`](cpp-cmake/src) directory and configure CMake accordingly
 
 ### Go (with ```gomod2nix```)
 
@@ -363,14 +374,14 @@ nix run
 nix develop
 ```
 
-#### (Optional) Format [`flake.nix`](go/flake.nix) using ```Alejandra```
+#### (Optional) Format [`flake.nix`](go-gomod2nix/flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
 
 #### To customize it to your own needs:
 
-* In [`flake.nix`](go/flake.nix)
+* In [`flake.nix`](go-gomod2nix/flake.nix)
 	* Edit description
       ```nix
         {
@@ -387,15 +398,15 @@ nix fmt
                 modules = ./gomod2nix.toml;
             };
         ```
-* In [`go.mod`](go/go.mod)
+* In [`go.mod`](go-gomod2nix/go.mod)
 	* Change modules and Go version
       ```vgo
             module hello
             go 1.22.7
       ```
 * For structure and code
-	* Add necessary code for the program in the src/ directory. Reflect changes in [`go.mod`](go/go.mod)
-	* Generate new [`gomod2nix.toml`](go/gomod2nix.toml) by:
+	* Add necessary code for the program in the src/ directory. Reflect changes in [`go.mod`](go-gomod2nix/go.mod)
+	* Generate new [`gomod2nix.toml`](go-gomod2nix/gomod2nix.toml) by:
 		* Going into development shell
 		  ```shell
                 nix develop

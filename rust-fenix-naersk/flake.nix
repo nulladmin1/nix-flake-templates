@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Development";
+  description = "Nix Flake Template for Rust using Fenix and Naersk";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";

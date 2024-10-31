@@ -6,7 +6,7 @@ Initialize using
 ```shell  
 nix flake init --template "github:nulladmin1/nix-flake-templates"
 ```
-or
+OR
 ```shell  
 nix flake init --template "github:nulladmin1/nix-flake-templates#default"
 ```

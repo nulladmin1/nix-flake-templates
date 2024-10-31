@@ -24,20 +24,20 @@
         description = "Nix Flake Template for Python using Poetry";
         path = ./python-poetry;
       };
-      rust-naersk = {
-        description = "Nix Flake Template for Rust using Naersk";
-        path = ./rust;
+      rust-fenix-naersk = {
+        description = "Nix Flake Template for Rust using Fenix and Naersk";
+        path = ./rust-fenix-naersk;
       };
       cpp-cmake = {
         description = "Nix Flake Template for C++ using CMake";
-        path = ./cpp;
+        path = ./cpp-cmake;
       };
       go-gomod2nix = {
         description = "Nix Flake Template for Go using gomod2nix";
-        path = ./go;
+        path = ./go-gomod2nix;
       };
       python = templates.python-poetry;
-      rust = templates.rust-naersk;
+      rust = templates.rust-fenix-naersk;
       cpp = templates.cpp-cmake;
       go = templates.go-gomod2nix;
     };

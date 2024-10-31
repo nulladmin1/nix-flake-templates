@@ -13,7 +13,7 @@ nix flake init --template "github:nulladmin1/nix-flake-templates#go-gomod2nix"
 
 This is how the structure of the template looks like:
 ```
-📦 go
+📦 go-gomod2nix
 ├─ 📁 src
 │  └─ 🐹 hello.go
 ├─ 🙈 .gitignore
@@ -26,7 +26,7 @@ This is how the structure of the template looks like:
 
 It includes a basic Go project that prints Hello World!
 
-It contains a ```devShell``` with this projects `goEnv` and the `gomod2nix` tool, and an app that prints Hello World
+It contains a ```devShells``` with this projects `goEnv` and the `gomod2nix` tool, and an app that prints Hello World
 
 #### Run using Nix
 ```shell

@@ -1,15 +1,20 @@
-# Nix Flake Template for Rust using Naersk
+# Nix Flake Template for Rust using Fenix and Naersk
 
 *All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)*
 
 Initialize using
 ```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#rust-naersk"
+nix flake init --template "github:nulladmin1/nix-flake-templates#rust-fenix-naersk"
+```
+OR
+Initialize using
+```shell
+nix flake init --template "github:nulladmin1/nix-flake-templates#rust"
 ```
 
 This is how to structure of the template looks like:
 ```
-📦 rust
+📦 rust-fenix-naersk
 ├─ 🔒 Cargo.lock
 ├─ ⚙️ Cargo.toml
 ├─ 🔒 flake.lock
@@ -51,7 +56,7 @@ nix fmt
     * Edit description
         ```nix
         {
-            description = "Nix Flake Template for Python using Poetry";
+            description = "Nix Flake Template for Rust using Fenix and Naersk";
         }	
         ``` 
     * Change the name of the binary

@@ -4,12 +4,17 @@
 
 Initialize using
 ```shell  
+nix flake init --template "github:nulladmin1/nix-flake-templates#cpp-cmake"
+```
+OR
+Initialize using
+```shell  
 nix flake init --template "github:nulladmin1/nix-flake-templates#cpp"
 ```
 
 This is how the structure of the template looks like:
 ```
-📦 cpp
+📦 cpp-cmake
 ├─ 🔒 Cargo.lock
 ├─ ⚙️ CMakeLists.txt
 ├─ 🔒 flake.lock
@@ -45,16 +50,13 @@ nix fmt
   * Edit description
   ```nix
     {
-        description = "Nix Flake Template for Python using Poetry";
-        # ...
+        description = "Nix Flake Template for C++ using";
     }	
     ``` 
   * Change the name of the binary
   ```nix
        {
-      # ...		
           program = "${self.packages.${system}.default}/bin/hello";
-      # ...	
       }
     ```
 * For the structure and code

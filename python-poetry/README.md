@@ -7,6 +7,11 @@ Initialize using
 ```shell  
 nix flake init --template "github:nulladmin1/nix-flake-templates#python-poetry"
 ```
+OR
+Initialize using
+```shell  
+nix flake init --template "github:nulladmin1/nix-flake-templates#python"
+```
 
 This is how the structure of the template looks like:
 ```
