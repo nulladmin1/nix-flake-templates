@@ -15,6 +15,16 @@
   in rec{
     formatter = forEachSystem (system: pkgs.${system}.alejandra);
 
+    devShells = forEachSystem (system: {
+      default = pkgs.${system}.mkShell {
+        packages = [
+          (pkgs.${system}.python312.withPackages (python-pkgs: with python-pkgs; [
+            mkdocs-material
+          ]))
+        ];
+      };
+    });
+
     templates = {
       default = {
         description = "Nix Flake Template for Development";
