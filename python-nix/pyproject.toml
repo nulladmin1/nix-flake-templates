@@ -1,0 +1,18 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Your Name", email = "you@example.com"},
+]
+dependencies = [
+]
+requires-python = ">= 3.11"
+readme = "README.md"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+app = "app:main"

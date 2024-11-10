@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Development";
+  description = "Nix Flake Template for Python with builtin Nix Builders";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -18,19 +18,30 @@
     devShells = forEachSystem (system: {
       default = pkgs.${system}.mkShell {
         packages = with pkgs.${system}; [
-          hello
-        ];
+          python311
+        ] ++ (with pkgs.${system}.python311Packages; [
+          setuptools
+        ]);
       };
     });
 
     packages = forEachSystem (system: {
-      default = pkgs.${system}.hello;
+      default = pkgs.${system}.python311Packages.buildPythonPackage rec {
+        pname = "app";
+        version = "0.1.0";
+        src = ./.;
+        format = "pyproject";
+
+        nativeBuildInputs = with pkgs.${system}.python311Packages; [
+          setuptools
+        ];
+      };
     });
 
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/hello";
+        program = "${self.packages.${system}.default}/bin/app";
       };
     });
   };
