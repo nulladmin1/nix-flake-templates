@@ -30,6 +30,10 @@
         description = "Nix Flake Template for Development";
         path = ./default;
       };
+      python-nix = {
+        description = "Nix Flake Template for Python using builtin Nix builders";
+        path = ./python-nix;
+      };
       python-poetry = {
         description = "Nix Flake Template for Python using Poetry";
         path = ./python-poetry;
