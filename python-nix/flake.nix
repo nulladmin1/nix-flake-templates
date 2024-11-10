@@ -21,6 +21,7 @@
           python311
         ] ++ (with pkgs.${system}.python311Packages; [
           setuptools
+          pip
         ]);
       };
     });
