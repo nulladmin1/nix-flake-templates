@@ -1,24 +1,19 @@
 [project]
 name = "app"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "Your Name", email = "you@example.com"},
-]
-requires-python = ">= 3.11"
+description = "Add your description here"
 readme = "README.md"
-
-dependencies = [
-]
-
-[project.optional-dependencies]
-test = [
-    "pytest"
-]
-
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires-python = ">=3.12"
+dependencies = []
 
 [project.scripts]
 app = "app:main"
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.3.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
