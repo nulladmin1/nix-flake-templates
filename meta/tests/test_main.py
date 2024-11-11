@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from app.main import main, get_sha256 
+from meta import main, get_sha256
 from hashlib import sha256
 
 class TestMain(unittest.TestCase):

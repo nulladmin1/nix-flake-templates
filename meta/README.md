@@ -124,7 +124,7 @@ nix fmt
 		app = "app.main:main"
 		```
 * For the structure and code
-	* Rename the [`app/`](app) directory to the name of your project. Make sure its the same as the path in the [`pyproject.toml`](pyproject.toml)
+	* Rename the [`app/`](init) directory to the name of your project. Make sure its the same as the path in the [`pyproject.toml`](pyproject.toml)
 		```
 		📦 python-poetry
 		├─ 📁 app
@@ -132,7 +132,7 @@ nix fmt
 		│  └─ 🐍 main.py
 		```
 	* Add necessary code for the program in the previous subdirectory. 
-	* Make sure that for the [`__init__.py`](app/__init__.py), that it imports from the name of your project, and it imports the necessary functions to be used as a library
+	* Make sure that for the [`__init__.py`](init/__init__.py), that it imports from the name of your project, and it imports the necessary functions to be used as a library
 		```python
 		from app.main import main, get_sha256
 		```
@@ -152,4 +152,4 @@ nix fmt
 		[tool.poetry.scripts]
 		PROJECT_NAME = "PROJECT_DIR.main:main"
 		```
-		where ${PROJECT_NAME} is the name of the project, and the ${PROJECT_DIR} is the location of the project (recommended to be the same as the PROJECT_NAME). By default it's: [`app/`](app)
+		where ${PROJECT_NAME} is the name of the project, and the ${PROJECT_DIR} is the location of the project (recommended to be the same as the PROJECT_NAME). By default it's: [`app/`](init)

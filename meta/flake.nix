@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Python using Poetry";
+  description = "Nix-Flake-Template Tools";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -28,11 +28,11 @@
 
     apps = forEachSystem (system: let
       inherit (poetry2nix.lib.mkPoetry2Nix {pkgs = pkgs.${system};}) mkPoetryApplication;
-      app = mkPoetryApplication {projectDir = ./.;};
+      meta = mkPoetryApplication {projectDir = ./.;};
     in {
       default = {
         type = "app";
-        program = "${app}/bin/app";
+        program = "${meta}/bin/meta";
       };
     });
   };
