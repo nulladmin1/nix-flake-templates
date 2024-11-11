@@ -32,7 +32,7 @@
     in {
       default = {
         type = "app";
-        program = "${meta}/bin/meta";
+        program = "${meta}/bin/init";
       };
     });
   };
