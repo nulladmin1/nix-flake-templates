@@ -1,56 +1,38 @@
 {
-  description = "Nix Flake Template for Go using GoMod2Nix";
+  description = "Nix Flake Template for Python using Poetry";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    gomod2nix = {
-      url = "github:nix-community/gomod2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    poetry2nix.url = "github:nix-community/poetry2nix";
   };
 
   outputs = {
     self,
     nixpkgs,
-    gomod2nix,
+    poetry2nix,
   }: let
     systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
     forEachSystem = nixpkgs.lib.genAttrs systems;
-    pkgs = forEachSystem (system:
-      import nixpkgs {
-        inherit system;
-        overlays = [
-          gomod2nix.overlays.default
-        ];
-      });
+    pkgs = forEachSystem (system: import nixpkgs {inherit system;});
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-    devShells = forEachSystem (system: let
-      goEnv = pkgs.${system}.mkGoEnv {pwd = ./.;};
-    in {
+    devShells = forEachSystem (system: {
       default = pkgs.${system}.mkShell {
-        packages = [
-          goEnv
-          gomod2nix.packages.${system}.default
+        packages = with pkgs.${system}; [
+          python3
+          poetry
         ];
       };
     });
 
-    packages = forEachSystem (system: {
-      default = pkgs.${system}.buildGoApplication {
-        pname = "hello";
-        version = "0.1.0";
-        pwd = ./.;
-        src = ./.;
-        modules = ./gomod2nix.toml;
-      };
-    });
-
-    apps = forEachSystem (system: {
+    apps = forEachSystem (system: let
+      inherit (poetry2nix.lib.mkPoetry2Nix {pkgs = pkgs.${system};}) mkPoetryApplication;
+      app = mkPoetryApplication {projectDir = ./.;};
+    in {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/src";
+        program = "${app}/bin/app";
       };
     });
   };
