@@ -13,13 +13,13 @@
   }: let
     systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
     forEachSystem = nixpkgs.lib.genAttrs systems;
-    pkgs = forEachSystem (system: import nixpkgs {inherit system;});
+    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     devShells = forEachSystem (system: {
-      default = pkgs.${system}.mkShell {
-        packages = with pkgs.${system}; [
+      default = pkgsFor.${system}.mkShell {
+        packages = with pkgsFor.${system}; [
           python3
           poetry
         ];
@@ -27,7 +27,7 @@
     });
 
     apps = forEachSystem (system: let
-      inherit (poetry2nix.lib.mkPoetry2Nix {pkgs = pkgs.${system};}) mkPoetryApplication;
+      inherit (poetry2nix.lib.mkPoetry2Nix {pkgs = pkgsFor.${system};}) mkPoetryApplication;
       app = mkPoetryApplication {projectDir = ./.;};
     in {
       default = {

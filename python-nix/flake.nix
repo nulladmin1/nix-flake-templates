@@ -11,15 +11,15 @@
   }: let
     systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
     forEachSystem = nixpkgs.lib.genAttrs systems;
-    pkgs = forEachSystem (system: import nixpkgs {inherit system;});
+    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     devShells = forEachSystem (system: {
-      default = pkgs.${system}.mkShell {
-        packages = with pkgs.${system}; [
+      default = pkgsFor.${system}.mkShell {
+        packages = with pkgsFor.${system}; [
           python311
-        ] ++ (with pkgs.${system}.python311Packages; [
+        ] ++ (with pkgsFor.${system}.python311Packages; [
           setuptools
           pip
         ]);
@@ -27,13 +27,13 @@
     });
 
     packages = forEachSystem (system: {
-      default = pkgs.${system}.python311Packages.buildPythonPackage rec {
+      default = pkgsFor.${system}.python311Packages.buildPythonPackage rec {
         pname = "app";
         version = "0.1.0";
         src = ./.;
         format = "pyproject";
 
-        nativeBuildInputs = with pkgs.${system}.python311Packages; [
+        nativeBuildInputs = with pkgsFor.${system}.python311Packages; [
           setuptools
         ];
       };

@@ -19,19 +19,19 @@
   }: let
     systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
     forEachSystem = nixpkgs.lib.genAttrs systems;
-    pkgs = forEachSystem (system:
+    pkgsFor = forEachSystem (system:
       import nixpkgs {
         inherit system;
         overlays = [
           fenix.overlays.default
         ];
       });
-    rust-toolchain = forEachSystem (system: pkgs.${system}.fenix.complete);
+    rust-toolchain = forEachSystem (system: pkgsFor.${system}.fenix.complete);
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     devShells = forEachSystem (system: {
-      default = pkgs.${system}.mkShell {
+      default = pkgsFor.${system}.mkShell {
         packages = with rust-toolchain.${system}; [
           cargo
           rustc
@@ -43,7 +43,7 @@
     });
 
     packages = forEachSystem (system: {
-      default = (pkgs.${system}.callPackage naersk {
+      default = (pkgsFor.${system}.callPackage naersk {
         cargo = rust-toolchain.${system}.cargo;
         rustc = rust-toolchain.${system}.rustc;
       }).buildPackage {

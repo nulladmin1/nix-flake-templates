@@ -23,8 +23,7 @@
   }: let
     systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
     forEachSystem = nixpkgs.lib.genAttrs systems;
-    pkgs = forEachSystem (system: import nixpkgs {inherit system;});
-    lib = forEachSystem (system: pkgs.${system}.lib);
+    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
 
     workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };
 
@@ -35,11 +34,11 @@
     pyprojectOverrides = _final: _prev: {
     };
 
-    pythonSet = forEachSystem(system:
-      (pkgs.${system}.callPackage pyproject-nix.build.packages {
-        python = pkgs.${system}.python312;
+    pythonSets = forEachSystem(system:
+      (pkgsFor.${system}.callPackage pyproject-nix.build.packages {
+        python = pkgsFor.${system}.python312;
       }).overrideScope
-        (lib.${system}.composeExtensions overlay pyprojectOverrides)
+        (nixpkgs.lib.composeExtensions overlay pyprojectOverrides)
       );
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
@@ -49,11 +48,11 @@
         editableOverlay = workspace.mkEditablePyprojectOverlay {
           root = "$REPO_ROOT";
         };
-        editablePythonSet = pythonSet.${system}.overrideScope editableOverlay;
+        editablePythonSets = pythonSets.${system}.overrideScope editableOverlay;
 
-        virtualenv = editablePythonSet.mkVirtualEnv "app" workspace.deps.all;
-      in pkgs.${system}.mkShell {
-        packages = with pkgs.${system}; [
+        virtualenv = editablePythonSets.mkVirtualEnv "app" workspace.deps.all;
+      in pkgsFor.${system}.mkShell {
+        packages = with pkgsFor.${system}; [
           uv
           virtualenv
         ];
@@ -65,7 +64,7 @@
     });
 
     packages = forEachSystem (system: {
-      default = pythonSet.${system}.mkVirtualEnv "app" workspace.deps.default;
+      default = pythonSets.${system}.mkVirtualEnv "app" workspace.deps.default;
     });
 
     apps = forEachSystem (system: {

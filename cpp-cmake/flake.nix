@@ -11,13 +11,13 @@
   }: let
     systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
     forEachSystem = nixpkgs.lib.genAttrs systems;
-    pkgs = forEachSystem (system: import nixpkgs {inherit system;});
+    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     devShells = forEachSystem (system: {
-      default = pkgs.${system}.mkShell {
-        packages = with pkgs.${system}; [
+      default = pkgsFor.${system}.mkShell {
+        packages = with pkgsFor.${system}; [
           libllvm
           cmake
           gtest
@@ -26,15 +26,15 @@
     });
 
     packages = forEachSystem (system: {
-      default = pkgs.${system}.stdenv.mkDerivation {
+      default = pkgsFor.${system}.stdenv.mkDerivation {
         pname = "cpp";
         version = "0.1.0";
         src = ./.;
 
-        nativeBuildInputs = with pkgs.${system}; [
+        nativeBuildInputs = with pkgsFor.${system}; [
           cmake
         ];
-        buildInputs = with pkgs.${system}; [
+        buildInputs = with pkgsFor.${system}; [
           gtest
         ];
       };

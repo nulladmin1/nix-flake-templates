@@ -16,7 +16,7 @@
   }: let
     systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
     forEachSystem = nixpkgs.lib.genAttrs systems;
-    pkgs = forEachSystem (system:
+    pkgsFor = forEachSystem (system:
       import nixpkgs {
         inherit system;
         overlays = [
@@ -27,9 +27,9 @@
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     devShells = forEachSystem (system: let
-      goEnv = pkgs.${system}.mkGoEnv {pwd = ./.;};
+      goEnv = pkgsFor.${system}.mkGoEnv {pwd = ./.;};
     in {
-      default = pkgs.${system}.mkShell {
+      default = pkgsFor.${system}.mkShell {
         packages = [
           goEnv
           gomod2nix.packages.${system}.default
@@ -38,7 +38,7 @@
     });
 
     packages = forEachSystem (system: {
-      default = pkgs.${system}.buildGoApplication {
+      default = pkgsFor.${system}.buildGoApplication {
         pname = "hello";
         version = "0.1.0";
         pwd = ./.;
