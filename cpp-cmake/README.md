@@ -28,23 +28,23 @@ This is how the structure of the template looks like:
 
 It includes a really simple Hello World program
 
-#### Run using Nix
+### Run using Nix
 
 ```shell
 nix run
 ```
 
-#### Go into Development Shell
+### Go into Development Shell
 ```shell
 nix develop
 ```
 
-#### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
+### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
 ```shell
 nix fmt
 ```
 
-#### To customize it to your own needs
+## To customize it to your own needs
 
 * In [`flake.nix`](flake.nix)
   * Edit description

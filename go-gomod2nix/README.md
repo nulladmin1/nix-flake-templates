@@ -28,22 +28,22 @@ It includes a basic Go project that prints Hello World!
 
 It contains a ```devShells``` with this projects `goEnv` and the `gomod2nix` tool, and an app that prints Hello World
 
-#### Run using Nix
+### Run using Nix
 ```shell
 nix run
 ```
 
-#### Go into Development Shell
+### Go into Development Shell
 ```shell
 nix develop
 ```
 
-#### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
+### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
 
-### To customize it to your own needs:
+## To customize it to your own needs:
 
 * In [`flake.nix`](flake.nix)
   * Edit description

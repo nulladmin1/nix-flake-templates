@@ -50,7 +50,7 @@ cargo run
 nix fmt
 ```
 
-#### To customize it to your own needs
+## To customize it to your own needs
 
 * In [`flake.nix`](flake.nix)
     * Edit description

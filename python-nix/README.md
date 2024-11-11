@@ -26,22 +26,22 @@ It includes a basic Python project that returns an SHA256 encoded string of the 
 
 The flake is able to run in the specified systems listed in the flake. It contains a ```devShells``` as an output with ```Python```,```Setuptools``` and ```Pip```, and an app as an output that builds a Python project using ```buildPythonPackage```.
 
-#### Run using Nix
+### Run using Nix
 ```shell
 nix run
 ```
 
-#### Go into Development Shell
+### Go into Development Shell
 ```shell
 nix develop
 ```
 
-#### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
+### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
 
-### To customize it to your own needs:
+## To customize it to your own needs:
 * In ['flake.nix'](flake.nix)
   * Edit description
     ```nix

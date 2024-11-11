@@ -13,17 +13,17 @@ nix flake init --template "github:nulladmin1/nix-flake-templates#default"
 
 The flake is able to run in the specified systems listed in the flake. It contains a ```devShells``` as an output with ```hello```, a package that runs ```hello``` from Nixpkgs, and an app that runs the previously mentioned package.
 
-#### Run using Nix
+### Run using Nix
 ```shell
 nix run
 ```
 
-#### Go into Development Shell
+### Go into Development Shell
 ```shell
 nix develop
 ```
 
-#### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
+### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
