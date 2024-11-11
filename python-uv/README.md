@@ -1,16 +1,18 @@
-# Nix Flake Template for Python using builtin Nix builders
+# Nix Flake Template for Python using UV
 
 *All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)*
 
 Initialize using
 ```shell  
-nix flake init --template "github:nulladmin1/nix-flake-templates#python-nix"
+nix flake init --template "github:nulladmin1/nix-flake-templates#python-uv"
 ```
-OR
+
+**Heavily inspired by the [official `uv2nix` docs](https://adisbladis.github.io/uv2nix/usage/hello-world.html)**
 
 This is how the structure of the template looks like:
 ```
-📦 python-nix
+📦 python-uv
+├─ ⚙️ .python-version
 ├─ 📁 app
 │  ├─ 🐍 __init__.py
 │  └─ 🐍 main.py
@@ -19,58 +21,48 @@ This is how the structure of the template looks like:
 ├─ ⚙️ pyproject.toml
 ├─ 📃 README.md
 └─ 📁 tests
-   └─ 🐍 test_main.py
+│  └─ 🐍 main.py
+└─ 🔒 uv.lock
  ```
 
 It includes a basic Python project that returns an SHA256 encoded string of the user's input. It has a testcase that can be run using ```Pytest``` or ```unittest```.
 
 The flake is able to run in the specified systems listed in the flake. It contains a ```devShells``` as an output with ```Python```,```Setuptools``` and ```Pip```, and an app as an output that builds a Python project using ```buildPythonPackage```.
 
-#### Run using Nix
+### Run using ```uv2nix```
+
 ```shell
 nix run
 ```
 
-#### Go into Development Shell
+### Run
+
+
+### Go into Development Shell
 ```shell
 nix develop
 ```
 
-#### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
+### (Optional) Format [`flake.nix`](flake.nix) using ```Alejandra```
 ```shelll
 nix fmt
 ```
 
-### To customize it to your own needs:
+## To customize it to your own needs:
 * In ['flake.nix'](flake.nix)
   * Edit description
     ```nix
     {
-        description = "Nix Flake Template for Python with builtin Nix Builders";
+        description = "Nix Flake Template for Python using UV";
     }	
     ```
-  * Change devShell dependencies
+  * Change virtualenv name for devShell
     ```nix
-    {
-        with pkgs.${system}; [
-              python311
-            ] ++ (with pkgs.${system}.python311Packages; [
-            setuptools
-            pip
-            ]);
-    }
+    virtualenv = editablePythonSet.mkVirtualEnv "app" workspace.deps.all;
     ```
-  * Change package details accordingly
+  * Change virtualenv name for the package
     ```nix
-    default = pkgs.${system}.python311Packages.buildPythonPackage rec {
-    pname = "app";
-    version = "0.1.0";
-    src = ./.;
-    format = "pyproject";
-    
-        nativeBuildInputs = with pkgs.${system}.python311Packages; [
-          setuptools
-        ];
+    default = pythonSet.${system}.mkVirtualEnv "app" workspace.deps.default;
     ```
   * Change executable name for app
     ```nix
@@ -82,34 +74,45 @@ nix fmt
     [project]
     name = "app"
     version = "0.1.0"
-    description = ""
-    authors = [
-        {name = "Your Name", email = "you@example.com"},
-    ]
+    description = "Add your description here"
+    readme = "README.md"
+    dependencies = []
     ```
   * Change Python version accordingly
     ```toml
-    requires-python = ">= 3.11"
+    requires-python = ">=3.12"
     ```
   * Add necessary and optional build dependencies
     ```toml
-    dependencies = [
-    ]
-    
-    [project.optional-dependencies]
-    test = [
-    "pytest"
+    [tool.uv]
+    dev-dependencies = [
+    "pytest>=8.3.3",
     ]
     ```
-  * Change the name and path of scripts if needed
+    The best way to add dependencies would be using
+    ```shell
+    uv add DEPENDENCY
+    ```
+    Likewise, the best way to remove dependencies would be using
+    ```shell
+    uv remove DEPENDENCY
+    ```
+    Adding or removing `dev` dependencies would require adding the `--dev` option
+  * Change the name and path of scripts if needed. These can be run by `uv run script_name`
     ```toml
     [project.scripts]
     app = "app:main"
     ```
+  * Change the build-system if needed (`Hatchling` is good enough, however `uv` will definitely come out with it's own build system in the future)
+    ```toml
+    [build-system]
+    requires = ["hatchling"]
+    build-backend = "hatchling.build"
+    ```
 * For the structure and code
-    * Rename the [`app/`](app) directory to the name of your project. Make sure its the same as the path in the [`pyproject.toml`](pyproject.toml)
+    * Rename the [`app/`](app) directory to the name of your project. Make sure it's the same as the path in the [`pyproject.toml`](pyproject.toml)
       ```
-      📦 python-nix
+      📦 python-uv
       ├─ 📁 app
       │  ├─ 🐍 __init__.py
       │  └─ 🐍 main.py
