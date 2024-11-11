@@ -38,6 +38,10 @@
         description = "Nix Flake Template for Python using Poetry";
         path = ./python-poetry;
       };
+      python-uv = {
+        description = "Nix Flake Template for Python using uv2nix";
+        path = ./python-uv;
+      };
       rust-fenix-naersk = {
         description = "Nix Flake Template for Rust using Fenix and Naersk";
         path = ./rust-fenix-naersk;
@@ -51,6 +55,7 @@
         path = ./go-gomod2nix;
       };
       python = templates.python-poetry;
+      uv = templates.python-uv;
       rust = templates.rust-fenix-naersk;
       cpp = templates.cpp-cmake;
       go = templates.go-gomod2nix;
