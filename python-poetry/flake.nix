@@ -19,12 +19,16 @@
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     devShells = forEachSystem (system: {
-      default = pkgsFor.${system}.mkShell {
-        packages = with pkgsFor.${system}; [
-          python3
+      default = (poetry2nix-lib.${system}.mkPoetryEnv {
+        projectDir = ./.;
+        editablePackageSources = {
+          app = ./app;
+        };
+      }).env.overrideAttrs (oldAttrs: {
+        buildInputs = with pkgsFor.${system}; [
           poetry
         ];
-      };
+      });
     });
 
     apps = forEachSystem (system: let
