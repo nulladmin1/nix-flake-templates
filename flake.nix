@@ -3,14 +3,16 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    systems.url = "github:nix-systems/default";
   };
 
   outputs = {
     self,
     nixpkgs,
+    systems,
+    ...
   }: let
-    systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
-    forEachSystem = nixpkgs.lib.genAttrs systems;
+    forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgs = forEachSystem (system: import nixpkgs {inherit system;});
   in rec{
     formatter = forEachSystem (system: pkgs.${system}.alejandra);

@@ -19,10 +19,10 @@
     nixpkgs,
     pyproject-nix,
     uv2nix,
+    systems,
     ...
   }: let
-    systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
-    forEachSystem = nixpkgs.lib.genAttrs systems;
+    forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
 
     workspace = uv2nix.lib.workspace.loadWorkspace { workspaceRoot = ./.; };

@@ -3,16 +3,26 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    poetry2nix.url = "github:nix-community/poetry2nix";
+    systems.url = "github:nix-systems/default";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
+    poetry2nix = {
+      url = "github:nix-community/poetry2nix";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     poetry2nix,
+    systems,
+    ...
   }: let
-    systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
-    forEachSystem = nixpkgs.lib.genAttrs systems;
+    forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);

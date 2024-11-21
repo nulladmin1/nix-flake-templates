@@ -3,9 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    systems.url = "github:nix-systems/default";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
     gomod2nix = {
       url = "github:nix-community/gomod2nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
   };
 
@@ -13,9 +19,10 @@
     self,
     nixpkgs,
     gomod2nix,
+    systems,
+    ...
   }: let
-    systems = ["x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
-    forEachSystem = nixpkgs.lib.genAttrs systems;
+    forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system:
       import nixpkgs {
         inherit system;
