@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Python with PyProject-Nix";
+  description = "Nix Flake Template for Python with pyproject-nix";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";

@@ -36,6 +36,10 @@
         description = "Nix Flake Template for Python using builtin Nix builders";
         path = ./python-nix;
       };
+      python-pyproject-nix = {
+        description = "Nix Flake Template for Python using pyproject-nix";
+        path = ./python-pyproject-nix;
+      };
       python-poetry = {
         description = "Nix Flake Template for Python using Poetry";
         path = ./python-poetry;
@@ -56,6 +60,7 @@
         description = "Nix Flake Template for Go using gomod2nix";
         path = ./go-gomod2nix;
       };
+      pyproject = templates.python-pyproject-nix;
       python = templates.python-poetry;
       uv = templates.python-uv;
       rust = templates.rust-fenix-naersk;

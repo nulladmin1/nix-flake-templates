@@ -1,16 +1,18 @@
-# Nix Flake Template for Python using builtin Nix builders
-
-*All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)*
+# Nix Flake Template for Python using `pyproject-nix`
 
 Initialize using
 ```shell  
-nix flake init --template "github:nulladmin1/nix-flake-templates#python-nix"
+nix flake init --template "github:nulladmin1/nix-flake-templates#python-pyproject-nix"
 ```
 OR
 
+```shell  
+nix flake init --template "github:nulladmin1/nix-flake-templates#pyproject"
+```
+
 This is how the structure of the template looks like:
 ```
-📦 python-nix
+📦 python-pyproject-nix
 ├─ 📁 app
 │  ├─ 🐍 __init__.py
 │  └─ 🐍 main.py
@@ -24,7 +26,7 @@ This is how the structure of the template looks like:
 
 It includes a basic Python project that returns an SHA256 encoded string of the user's input. It has a testcase that can be run using ```Pytest``` or ```unittest```.
 
-The flake is able to run in the specified systems listed in the flake. It contains a ```devShells``` as an output with ```Python```,```Setuptools``` and ```Pip```, and an app as an output that builds a Python project using ```buildPythonPackage```.
+The flake is able to run in the specified systems listed in the flake. It contains a ```devShells``` as an output with a `pythonEnv` that contains all project dependencies, and an app as an output that builds a Python project using `pyproject-nix`'s '`buildPythonPackage` renderer.
 
 ### Run using Nix
 ```shell
@@ -46,31 +48,22 @@ nix fmt
   * Edit description
     ```nix
     {
-        description = "Nix Flake Template for Python with builtin Nix Builders";
+        description = "Nix Flake Template for Python using pyproject-nix";
     }	
+    ```
+  * Change Python version if necessary
+    ```nix
+    python = forEachSystem (system: pkgsFor.${system}.python312);
     ```
   * Change devShell dependencies
     ```nix
     {
-        with pkgs.${system}; [
-              python311
-            ] ++ (with pkgs.${system}.python311Packages; [
-            setuptools
-            pip
-            ]);
-    }
-    ```
-  * Change package details accordingly
-    ```nix
-    default = pkgs.${system}.python311Packages.buildPythonPackage rec {
-    pname = "app";
-    version = "0.1.0";
-    src = ./.;
-    format = "pyproject";
-    
-        nativeBuildInputs = with pkgs.${system}.python311Packages; [
-          setuptools
+    pkgsFor.${system}.mkShell {
+        packages = [
+          pythonEnv
         ];
+      };
+    }
     ```
   * Change executable name for app
     ```nix
@@ -109,7 +102,7 @@ nix fmt
 * For the structure and code
     * Rename the [`app/`](app) directory to the name of your project. Make sure its the same as the path in the [`pyproject.toml`](pyproject.toml)
       ```
-      📦 python-nix
+      📦 python-pyproject-nix
       ├─ 📁 app
       │  ├─ 🐍 __init__.py
       │  └─ 🐍 main.py
