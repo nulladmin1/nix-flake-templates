@@ -1,44 +1,46 @@
 {
-  description = "Nix Flake Template for Python with builtin Nix Builders";
+  description = "Nix Flake Template for Python with PyProject-Nix";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     systems.url = "github:nix-systems/default";
+    pyproject-nix = {
+      url = "github:pyproject-nix/pyproject.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
+    pyproject-nix,
     systems,
     ...
   }: let
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
+    project = pyproject-nix.lib.project.loadPyproject { projectRoot = ./.; };
+
+    python = forEachSystem (system: pkgsFor.${system}.python312);
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     devShells = forEachSystem (system: {
-      default = pkgsFor.${system}.mkShell {
-        packages = with pkgsFor.${system}; [
-          python311
-        ] ++ (with pkgsFor.${system}.python311Packages; [
-          setuptools
-          pip
-        ]);
+      default = let 
+        arg = project.renderers.withPackages { python = python.${system}; };
+
+        pythonEnv = python.${system}.withPackages arg;
+      in pkgsFor.${system}.mkShell {
+        packages = [
+          pythonEnv
+        ];
       };
     });
 
     packages = forEachSystem (system: {
-      default = pkgsFor.${system}.python311Packages.buildPythonPackage rec {
-        pname = "app";
-        version = "0.1.0";
-        src = ./.;
-        format = "pyproject";
-
-        nativeBuildInputs = with pkgsFor.${system}.python311Packages; [
-          setuptools
-        ];
-      };
+      default =  let 
+        attrs = project.renderers.buildPythonPackage { python = python.${system}; };
+      in python.${system}.pkgs.buildPythonPackage (attrs);
     });
 
     apps = forEachSystem (system: {
