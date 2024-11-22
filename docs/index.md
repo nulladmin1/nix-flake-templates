@@ -1,17 +1,22 @@
-# Welcome to MkDocs
+# Nix Flake Templates Wiki
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+A collection of Nix Flake Templates
 
-## Commands
+Initialize using
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+```shell
+nix flake init --template "github:nulladmin1/nix-flake-templates#${LANG}"
+```
 
-## Project layout
+Where ```${LANG}``` is the supported language:
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+| Language                                  | Subdirectory                                                                                      | Documentation                         |
+|-------------------------------------------|---------------------------------------------------------------------------------------------------|---------------------------------------|
+| _Default_                                 | [default](https://github.com/nulladmin1/nix-flake-templates/tree/main/default)                    | [default]()                           |
+| Python (using ```poetry2nix```)           | [python-poetry](https://github.com/nulladmin1/nix-flake-templates/tree/main/python-poetry)        | [README](python-poetry/README.md)     |
+| Python (using builtin Nix builders)       | [python-nix](https://github.com/nulladmin1/nix-flake-templates/tree/main/python-nix)              |  [README](python-nix/README.md)       |
+| Python (using ```uv2nix```)               | [python-uv](https://github.com/nulladmin1/nix-flake-templates/tree/main/python-uv)                | [README](python-uv/README.md)         |
+| Go (using ```gomod2nix```                 | [go-gomod2nix](https://github.com/nulladmin1/nix-flake-templates/tree/main/go-gomod2nix)          | [README](go-gomod2nix/README.md)      |
+| Rust (using ```fenix``` and ```naersk```) | [rust-fenix-naersk](https://github.com/nulladmin1/nix-flake-templates/tree/main/rust-fenix-naersk)| [README](rust-fenix-naersk/README.md) |
+| C++ (using ```CMake```)                   | [cpp-cmake](https://github.com/nulladmin1/nix-flake-templates/tree/main/cpp-cmake)                | [README](cpp-cmake/README.md)         |
+
