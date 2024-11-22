@@ -1,6 +1,0 @@
-site_name: nix-flake-templates
-theme:
-  material
-
-nav:
-  - Home: index.md
