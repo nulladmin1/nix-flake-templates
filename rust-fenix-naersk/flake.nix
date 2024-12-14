@@ -44,12 +44,13 @@
     });
 
     packages = forEachSystem (system: {
-      default = (pkgsFor.${system}.callPackage naersk {
-        cargo = rust-toolchain.${system}.cargo;
-        rustc = rust-toolchain.${system}.rustc;
-      }).buildPackage {
-        src = ./.;
-      };
+      default =
+        (pkgsFor.${system}.callPackage naersk {
+          inherit (rust-toolchain.${system}) cargo rustc;
+        })
+        .buildPackage {
+          src = ./.;
+        };
     });
 
     apps = forEachSystem (system: {
