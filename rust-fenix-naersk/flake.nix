@@ -27,7 +27,7 @@
           fenix.overlays.default
         ];
       });
-    rust-toolchain = forEachSystem (system: pkgsFor.${system}.fenix.complete);
+    rust-toolchain = forEachSystem (system: pkgsFor.${system}.fenix.stable);
   in {
     formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
