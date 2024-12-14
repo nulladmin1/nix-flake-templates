@@ -60,12 +60,17 @@
         description = "Nix Flake Template for Go using gomod2nix";
         path = ./go-gomod2nix;
       };
+      vimPlugins = {
+        description = "Nix Flake Template for vimPlugins";
+        path = ./vimPlugin;
+      };
       pyproject = templates.python-pyproject-nix;
       python = templates.python-poetry;
       uv = templates.python-uv;
       rust = templates.rust-fenix-naersk;
       cpp = templates.cpp-cmake;
       go = templates.go-gomod2nix;
+      vim = templates.vimPlugins;
     };
   };
 }
