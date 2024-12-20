@@ -22,6 +22,10 @@
         description = "Nix Flake Template for Development";
         path = ./default;
       };
+      go-nix = {
+        description = "Nix Flake Template for Go with builtin Nix Builders";
+        path = ./go-nix;
+      };
       python-nix = {
         description = "Nix Flake Template for Python using builtin Nix builders";
         path = ./python-nix;
