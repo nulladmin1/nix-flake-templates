@@ -24,21 +24,24 @@
   }: let
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
-    poetry2nix-lib = forEachSystem(system: poetry2nix.lib.mkPoetry2Nix { pkgs = pkgsFor.${system}; });
+    poetry2nix-lib = forEachSystem (system: poetry2nix.lib.mkPoetry2Nix {pkgs = pkgsFor.${system};});
   in {
-    formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
 
     devShells = forEachSystem (system: {
-      default = (poetry2nix-lib.${system}.mkPoetryEnv {
-        projectDir = ./.;
-        editablePackageSources = {
-          app = ./app;
-        };
-      }).env.overrideAttrs (oldAttrs: {
-        buildInputs = with pkgsFor.${system}; [
-          poetry
-        ];
-      });
+      default =
+        (poetry2nix-lib.${system}.mkPoetryEnv {
+          projectDir = ./.;
+          editablePackageSources = {
+            app = ./app;
+          };
+        })
+        .env
+        .overrideAttrs (oldAttrs: {
+          buildInputs = with pkgsFor.${system}; [
+            poetry
+          ];
+        });
     });
 
     apps = forEachSystem (system: let

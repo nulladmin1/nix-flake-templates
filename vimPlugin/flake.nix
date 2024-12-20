@@ -14,7 +14,7 @@
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
   in {
-    formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
     packages = forEachSystem (system: {
       default = pkgsFor.${system}.callPackage ./default.nix {};
     });

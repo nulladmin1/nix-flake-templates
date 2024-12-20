@@ -29,7 +29,7 @@
       });
     rust-toolchain = forEachSystem (system: pkgsFor.${system}.fenix.stable);
   in {
-    formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
 
     devShells = forEachSystem (system: {
       default = pkgsFor.${system}.mkShell {

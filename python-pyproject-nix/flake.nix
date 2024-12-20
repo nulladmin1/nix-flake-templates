@@ -19,28 +19,30 @@
   }: let
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
-    project = pyproject-nix.lib.project.loadPyproject { projectRoot = ./.; };
+    project = pyproject-nix.lib.project.loadPyproject {projectRoot = ./.;};
 
     python = forEachSystem (system: pkgsFor.${system}.python312);
   in {
-    formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
 
     devShells = forEachSystem (system: {
-      default = let 
-        arg = project.renderers.withPackages { python = python.${system}; };
+      default = let
+        arg = project.renderers.withPackages {python = python.${system};};
 
         pythonEnv = python.${system}.withPackages arg;
-      in pkgsFor.${system}.mkShell {
-        packages = [
-          pythonEnv
-        ];
-      };
+      in
+        pkgsFor.${system}.mkShell {
+          packages = [
+            pythonEnv
+          ];
+        };
     });
 
     packages = forEachSystem (system: {
-      default =  let 
-        attrs = project.renderers.buildPythonPackage { python = python.${system}; };
-      in python.${system}.pkgs.buildPythonPackage (attrs);
+      default = let
+        attrs = project.renderers.buildPythonPackage {python = python.${system};};
+      in
+        python.${system}.pkgs.buildPythonPackage attrs;
     });
 
     apps = forEachSystem (system: {

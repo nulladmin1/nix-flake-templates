@@ -15,21 +15,23 @@
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
   in {
-    formatter = forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
 
     devShells = forEachSystem (system: {
       default = pkgsFor.${system}.mkShell {
-        packages = with pkgsFor.${system}; [
-          python311
-        ] ++ (with pkgsFor.${system}.python311Packages; [
-          setuptools
-          pip
-        ]);
+        packages = with pkgsFor.${system};
+          [
+            python311
+          ]
+          ++ (with pkgsFor.${system}.python311Packages; [
+            setuptools
+            pip
+          ]);
       };
     });
 
     packages = forEachSystem (system: {
-      default = pkgsFor.${system}.python311Packages.buildPythonPackage rec {
+      default = pkgsFor.${system}.python311Packages.buildPythonPackage {
         pname = "app";
         version = "0.1.0";
         src = ./.;
