@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Development";
+  description = "Nix Flake Template for Go with builtin Nix Builders";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -20,13 +20,18 @@
     devShells = forEachSystem (system: {
       default = pkgsFor.${system}.mkShell {
         packages = with pkgsFor.${system}; [
-          hello
+          go
         ];
       };
     });
 
     packages = forEachSystem (system: {
-      default = pkgsFor.${system}.hello;
+      default = pkgsFor.${system}.buildGoModule {
+        pname = "hello";
+        version = "0.1.0";
+        src = ./.;
+        vendorHash = null;
+      };
     });
 
     apps = forEachSystem (system: {
