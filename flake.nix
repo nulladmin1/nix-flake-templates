@@ -58,6 +58,11 @@
         description = "Nix Flake Template for vimPlugins";
         path = ./vimPlugin;
       };
+      flutter-nix = {
+        description = "Nix Flake Template for Flutter using Nix Builders";
+        path = ./flutter-nix;
+      };
+      flutter = templates.flutter-nix;
       pyproject = templates.python-pyproject-nix;
       python = templates.python-poetry;
       uv = templates.python-uv;
