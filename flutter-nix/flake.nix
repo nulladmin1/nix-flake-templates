@@ -13,14 +13,8 @@
     ...
   }: let
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system:
-      import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
-          android_sdk.accept_license = true;
-        };
-      });
+    pkgsFor =
+      forEachSystem (system: import nixpkgs {inherit system;});
   in {
     formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
 
@@ -40,21 +34,17 @@
         dartSdk = pkgsFor.${system}.dart;
         autoDepsList = true;
         autoPubspecLock = ./pubspec.lock;
+        targetFlutterPlatform = "web";
       };
+      web = self.packages.${system}.default.overrideAttrs (old: {
+        targetFlutterPlatform = "web";
+      });
     });
 
     apps = forEachSystem (system: {
       default = {
         type = "app";
         program = "${self.packages.${system}.default}/bin/app";
-      };
-      android = {
-        type = "app";
-        program = pkgsFor.${system}.androidenv.emulateApp {
-          name = "app";
-          platformVersion = "28";
-          abiVersion = "armeabi-v7a";
-        };
       };
     });
   };
