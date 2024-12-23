@@ -1,4 +1,4 @@
-package com.example.flutter_nix
+package com.example.app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,6 +1,6 @@
 {
-    "name": "flutter_nix",
-    "short_name": "flutter_nix",
+    "name": "app",
+    "short_name": "app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
