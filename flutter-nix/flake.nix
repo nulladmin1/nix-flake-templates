@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Flutter";
+  description = "Nix Flake Template for Flutter with Nix Builders";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -15,19 +15,20 @@
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor =
       forEachSystem (system: import nixpkgs {inherit system;});
+    flutterPackage = forEachSystem (system: pkgsFor.${system}.flutter327);
   in {
     formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
 
     devShells = forEachSystem (system: {
       default = pkgsFor.${system}.mkShell {
-        packages = with pkgsFor.${system}; [
-          androidenv.androidPkgs.androidsdk
+        packages = [
+          flutterPackage
         ];
       };
     });
 
     packages = forEachSystem (system: {
-      default = pkgsFor.${system}.flutter327.buildFlutterApplication {
+      default = flutterPackage.${system}.buildFlutterApplication {
         pname = "app";
         version = "0.1.0";
         src = ./.;
