@@ -36,14 +36,19 @@
       default = pkgsFor.${system}.flutter327.buildFlutterApplication {
         pname = "app";
         version = "0.1.0";
-        src = pkgsFor.${system}.lib.cleanSource ./.;
+        src = ./.;
         dartSdk = pkgsFor.${system}.dart;
         autoDepsList = true;
+        autoPubspecLock = ./pubspec.lock;
       };
     });
 
     apps = forEachSystem (system: {
       default = {
+        type = "app";
+        program = "${self.packages.${system}.default}/bin/app";
+      };
+      android = {
         type = "app";
         program = pkgsFor.${system}.androidenv.emulateApp {
           name = "app";
