@@ -23,3 +23,4 @@ Where `${TYPE}` is the supported type of template:
 | Go (using `gomod2nix`               | [go-gomod2nix](go-gomod2nix)                 | [README](go-gomod2nix/README.md)         |
 | Rust (using `fenix` and `naersk`)   | [rust-fenix-naersk](rust-fenix-naersk)       | [README](rust-fenix-naersk/README.md)    |
 | C++ (using `CMake`)                 | [cpp-cmake](cpp-cmake)                       | [README](cpp-cmake/README.md)            |
+| Flutter (using Nix builders)        | [flutter-nix](flutter-nix)                   | [README](flutter-nix/README.md)          |
