@@ -18,6 +18,6 @@ stdenv.mkDerivation {
     description = "";
     homepage = "";
     license = lib.licenses;
-    maintainers = with lib.maintainers; [];
+    maintainers = with lib.maintainers; [ ];
   };
 }
