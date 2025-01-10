@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Development";
+  description = "Nix Flake Template for Development in Nixpkgs";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -15,24 +15,24 @@
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
   in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
+    formatter = forEachSystem (system: pkgsFor.${system}.nixfmt-rfc-style);
 
     devShells = forEachSystem (system: {
       default = pkgsFor.${system}.mkShell {
         packages = with pkgsFor.${system}; [
-          hello
+          nixfmt-rfc-style
         ];
       };
     });
 
     packages = forEachSystem (system: {
-      default = pkgsFor.${system}.hello;
+      default = pkgsFor.${system}.callPackage ./package.nix;
     });
 
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/hello";
+        program = pkgsFor.${system}.lib.getExe self.packages.${system}.default;
       };
     });
   };
