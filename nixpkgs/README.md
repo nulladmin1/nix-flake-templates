@@ -8,7 +8,7 @@ Initialize using
 nix flake init --template "github:nulladmin1/nix-flake-templates#nixpkgs"
 ```
 
-[TODO]: #
+This flake provides a really simple flake to be used when making `Nixpkgs` packages. It has the `nixfmt-rfc-style` formatter used in `nixpkgs`, and a package and app declaration using for building and executing the [package.nix](./package.nix) file.
 
 ### Run using Nix
 
@@ -22,7 +22,7 @@ nix run
 nix develop
 ```
 
-### (Optional) Format [`flake.nix`](flake.nix) using `Alejandra`
+### (Optional) Format [`flake.nix`](flake.nix) using `nixfmt-rfc-style`
 
 ```shelll
 nix fmt
