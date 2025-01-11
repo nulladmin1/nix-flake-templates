@@ -62,6 +62,10 @@
         description = "Nix Flake Template for Flutter using Nix Builders";
         path = ./flutter-nix;
       };
+      nixpkgs = {
+        description = "Nix Flake Template for Nixpkgs";
+        path = ./nixpkgs;
+      };
       flutter = templates.flutter-nix;
       pyproject = templates.python-pyproject-nix;
       python = templates.python-poetry;
