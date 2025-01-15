@@ -1,4 +1,4 @@
 **/.direnv/
 **/.idea/
 **/__pycache__
-**/flake.lock
+**.lock
