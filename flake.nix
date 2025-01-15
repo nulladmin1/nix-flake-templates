@@ -66,14 +66,14 @@
         description = "Nix Flake Template for Nixpkgs";
         path = ./nixpkgs;
       };
-      flutter = templates.flutter-nix;
-      pyproject = templates.python-pyproject-nix;
-      python = templates.python-poetry;
-      uv = templates.python-uv;
-      rust = templates.rust-fenix-naersk;
-      cpp = templates.cpp-cmake;
-      go = templates.go-gomod2nix;
-      vim = templates.vimPlugins;
+      flutter = self.templates.flutter-nix;
+      pyproject = self.templates.python-pyproject-nix;
+      python = self.templates.python-poetry;
+      uv = self.templates.python-uv;
+      rust = self.templates.rust-fenix-naersk;
+      cpp = self.templates.cpp-cmake;
+      go = self.templates.go-gomod2nix;
+      vim = self.templates.vimPlugins;
     };
   };
 }
