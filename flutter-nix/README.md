@@ -8,7 +8,7 @@ Initialize using
 nix flake init --template "github:nulladmin1/nix-flake-templates#flutter"
 ```
 
-It includes a basic Flutter project that has `Hello World` in the middle of the screen. If you are going to use as a template, delete all the flutter-specific subdirectories and files (./app.iml, ./pubspec.lock, ./pubspec.yaml, ./analysis_options.yaml, ./ios, ./lib, ./web, ./linux, ./macos, ./android, and ./windows) and then make a new one
+It does not contain  an existing flutter project - you have to initialize one using `flutter create .`
 
 ### Run using Nix
 
@@ -30,6 +30,7 @@ nix fmt
 
 ## To customize it to your own needs:
 
+- *First* Initialize a flutter project by running `flutter create .`
 - In ['flake.nix'](flake.nix)
 
   - Edit description
@@ -69,30 +70,4 @@ nix fmt
   - Change executable name for app
     ```nix
     program = "${self.packages.${system}.default}/bin/app";
-    ```
-
-- In [`pyproject.toml`](pyproject.toml)
-
-  - Change project details accordingly
-
-    ```yaml
-    name: app
-    description: "A new Flutter project."
-    publish_to: "none"
-    version: 0.1.0
-
-    environment:
-      sdk: ^3.5.4
-
-    dependencies:
-      flutter:
-        sdk: flutter
-
-    dev_dependencies:
-      flutter_test:
-        sdk: flutter
-      flutter_lints: ^4.0.0
-
-    flutter:
-      uses-material-design: true
     ```
