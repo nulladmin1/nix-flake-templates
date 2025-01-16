@@ -12,18 +12,29 @@
       inputs.pyproject-nix.follows = "pyproject-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    pyproject-build-systems = {
+      url = "github:pyproject-nix/build-system-pkgs";
+      inputs = {
+        pyproject-nix.follows = "pyproject-nix";
+        uv2nix.follows = "uv2nix";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
   };
 
   outputs = {
     self,
+    systems,
     nixpkgs,
     pyproject-nix,
     uv2nix,
-    systems,
+    pyproject-build-systems,
     ...
   }: let
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
+
+    inherit (nixpkgs) lib;
 
     workspace = uv2nix.lib.workspace.loadWorkspace {workspaceRoot = ./.;};
 
@@ -34,13 +45,20 @@
     pyprojectOverrides = _final: _prev: {
     };
 
+    python = forEachSystem (system: pkgsFor.${system}.python312);
+
     pythonSets = forEachSystem (
       system:
         (pkgsFor.${system}.callPackage pyproject-nix.build.packages {
-          python = pkgsFor.${system}.python312;
+          python = python.${system};
         })
         .overrideScope
-        (nixpkgs.lib.composeExtensions overlay pyprojectOverrides)
+        (lib.composeManyExtensions
+          [
+            pyproject-build-systems.overlays.default
+            overlay
+            pyprojectOverrides
+          ])
     );
   in {
     formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
@@ -50,7 +68,29 @@
         editableOverlay = workspace.mkEditablePyprojectOverlay {
           root = "$REPO_ROOT";
         };
-        editablePythonSets = pythonSets.${system}.overrideScope editableOverlay;
+        editablePythonSets = pythonSets.${system}.overrideScope (
+          lib.composeManyExtensions [
+            editableOverlay
+
+            (final: prev: {
+              app = prev.app.overrideAttrs (old: {
+                src = lib.fileset.toSource {
+                  root = old.src;
+                  fileset = lib.fileset.unions (map (file: old.src + file) [
+                    "/pyproject.toml"
+                    "/README.md"
+                    "/app"
+                  ]);
+                };
+                nativeBuildInputs =
+                  old.nativeBuildInputs
+                  ++ final.resolveBuildSystem {
+                    editables = [];
+                  };
+              });
+            })
+          ]
+        );
 
         virtualenv = editablePythonSets.mkVirtualEnv "app" workspace.deps.all;
       in
@@ -59,6 +99,13 @@
             uv
             virtualenv
           ];
+
+          env = {
+            UV_NO_SYNC = "1";
+            UV_PYTHON = "${virtualenv}/bin/python}";
+            UV_PYTHON_DOWNLOADS = "never";
+          };
+
           shellHook = ''
             unset PYTHONPATH
             export REPO_ROOT=$(git rev-parse --show-toplevel)
