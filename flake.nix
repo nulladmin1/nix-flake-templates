@@ -19,12 +19,14 @@
   in {
     checks = forEachSystem (system: {
       pre-commit-run = pre-commit-hooks.lib.${system}.run {
-        src = pkgsFor.${system}.lib.fileset.difference ./. ./nixpkgs;
+        src = ./.;
         hooks = {
           actionlint.enable = true;
           alejandra.enable = true;
+          editorconfig-checker.enable = true;
           statix.enable = true;
           nil.enable = true;
+          prettier.enable = true;
         };
       };
     });
