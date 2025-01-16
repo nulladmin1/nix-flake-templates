@@ -4,18 +4,49 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     systems.url = "github:nix-systems/default";
+
+    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   outputs = {
     self,
     nixpkgs,
     systems,
+    pre-commit-hooks,
+    treefmt-nix,
     ...
   }: let
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgs = forEachSystem (system: import nixpkgs {inherit system;});
-  in rec {
-    formatter = forEachSystem (system: pkgs.${system}.alejandra);
+    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
+    treefmtEval = forEachSystem (system:
+      treefmt-nix.lib.evalModule {
+        projectRoolFile = "flake.nix";
+
+        programs = {
+          actionlint.enable = true;
+          alejandra.enable = true;
+          statix.enable = true;
+        };
+      });
+  in {
+    formatter = forEachSystem (system: treefmtEval.${system}.config.build.wrapper);
+
+    checks = forEachSystem (system: {
+      pre-commit-check = pre-commit-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          treefmt.enable = true;
+        };
+      };
+    });
+
+    devShells = forEachSystem (system: {
+      default = pkgsFor.${system}.mkShell {
+        inherit (self.checks.${system}.pre-commit-check) shellHook;
+        buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+      };
+    });
 
     templates = {
       default = {
