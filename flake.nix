@@ -26,7 +26,6 @@
           editorconfig-checker.enable = true;
           statix.enable = true;
           nil.enable = true;
-          prettier.enable = true;
         };
       };
     });
