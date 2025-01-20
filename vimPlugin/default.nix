@@ -2,9 +2,8 @@
   vimUtils,
   fetchFromGitHub,
 }:
-# I actually use this plugin (notion.nvim) in my Nixvim configuration
 vimUtils.buildVimPlugin {
-  name = "notion";
+  name = "project_name";
 
   src = fetchFromGitHub {
     owner = "Al0den";

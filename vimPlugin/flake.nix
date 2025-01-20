@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Vim Plugins (notion.nvim)";
+  description = "project_name";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
