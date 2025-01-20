@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Rust using Fenix and Naersk";
+  description = "project_name";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -56,7 +56,7 @@
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/rust";
+        program = "${self.packages.${system}.default}/bin/project_name";
       };
     });
   };

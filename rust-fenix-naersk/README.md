@@ -21,7 +21,6 @@ This is how to structure of the template looks like:
 📦 rust-fenix-naersk
 ├─ 🔒 Cargo.lock
 ├─ ⚙️ Cargo.toml
-├─ 🔒 flake.lock
 ├─ ⚙️ flake.nix
 ├─ 📁 src
 │  ├─ 🦀 main.rs
@@ -65,14 +64,14 @@ nix fmt
   - Edit description
     ```nix
     {
-        description = "Nix Flake Template for Rust using Fenix and Naersk";
+        description = "project_name";
     }
     ```
   - Change the name of the binary
 
   ```nix
   {
-        program = "${self.packages.${system}.default}/bin/hello";
+        program = "${self.packages.${system}.default}/bin/project_name";
   }
   ```
 
@@ -82,11 +81,10 @@ nix fmt
 
   ```toml
   	[package]
-  	name = "rust"
+  	name = "project_name"
   	version = "0.1.0"
   	edition = "2021"
   ```
 
 - For the structure and code
   - Add necessary code into the [`src/`](src) directory
-
