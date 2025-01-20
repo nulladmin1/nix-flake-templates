@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Go using GoMod2Nix";
+  description = "project_name";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -46,7 +46,7 @@
 
     packages = forEachSystem (system: {
       default = pkgsFor.${system}.buildGoApplication {
-        pname = "hello";
+        pname = "project_name";
         version = "0.1.0";
         pwd = ./.;
         src = ./.;
