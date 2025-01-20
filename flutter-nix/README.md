@@ -8,7 +8,7 @@ Initialize using
 nix flake init --template "github:nulladmin1/nix-flake-templates#flutter"
 ```
 
-It does not contain  an existing flutter project - you have to initialize one using `flutter create .`
+It does not contain an existing flutter project - you have to initialize one using `flutter create .`
 
 ### Run using Nix
 
@@ -30,13 +30,13 @@ nix fmt
 
 ## To customize it to your own needs:
 
-- *First* Initialize a flutter project by running `flutter create .`
+- _First_ Initialize a flutter project by running `flutter create .`
 - In ['flake.nix'](flake.nix)
 
   - Edit description
     ```nix
     {
-        description = "Nix Flake Template for Flutter with Nix Builders";
+        description = "project_name";
     }
     ```
   - Change `Flutter SDK` version
@@ -46,7 +46,7 @@ nix fmt
     }
     ```
   - Change package details accordingly
-    _Note: changing the name of the app here doesn't change the name of the binary or the project - those are controlled by the Flutter project itself. That's why its recommended to delete the existing one and make a new one_
+    _Note: changing the name of the app here doesn't change the name of the binary or the project - those are controlled by the Flutter project itself. So, don't forget to run `flutter create .`_
 
     ```nix
     {
@@ -71,3 +71,4 @@ nix fmt
     ```nix
     program = "${self.packages.${system}.default}/bin/app";
     ```
+

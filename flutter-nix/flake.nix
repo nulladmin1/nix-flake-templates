@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Flutter with Nix Builders";
+  description = "project_name";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -29,13 +29,12 @@
 
     packages = forEachSystem (system: {
       default = flutterPackage.${system}.buildFlutterApplication {
-        pname = "app";
+        pname = "project_name";
         version = "0.1.0";
         src = ./.;
         dartSdk = pkgsFor.${system}.dart;
         autoDepsList = true;
         autoPubspecLock = ./pubspec.lock;
-        targetFlutterPlatform = "web";
       };
       web = self.packages.${system}.default.overrideAttrs (old: {
         targetFlutterPlatform = "web";
@@ -45,7 +44,7 @@
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/app";
+        program = "${self.packages.${system}.default}/bin/project_name";
       };
     });
   };
