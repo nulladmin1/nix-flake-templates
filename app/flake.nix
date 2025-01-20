@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template App";
+  description = "Nix Flake Template App (getflake)";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -56,7 +56,7 @@
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/app";
+        program = "${self.packages.${system}.default}/bin/getflake";
       };
     });
   };
