@@ -1,4 +1,4 @@
-# Nix Flake Template for Python using builtin Nix builders
+# Nix Flake Template for Python using Nixpkgs builders
 
 _All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)_
 
@@ -8,24 +8,20 @@ Initialize using
 nix flake init --template "github:nulladmin1/nix-flake-templates#python-nix"
 ```
 
-OR
-
 This is how the structure of the template looks like:
 
 ```
 📦 python-nix
-├─ 📁 app
+├─ 📁 project_name
 │  ├─ 🐍 __init__.py
 │  └─ 🐍 main.py
 ├─ 🔒 flake.lock
 ├─ ⚙️ flake.nix
 ├─ ⚙️ pyproject.toml
-├─ 📃 README.md
-└─ 📁 tests
-   └─ 🐍 test_main.py
+└─ 📃 README.md
 ```
 
-It includes a basic Python project that returns an SHA256 encoded string of the user's input. It has a testcase that can be run using `Pytest` or `unittest`.
+It includes a basic Python project that returns an SHA256 encoded string of the user's input.
 
 The flake is able to run in the specified systems listed in the flake. It contains a `devShells` as an output with `Python`,`Setuptools` and `Pip`, and an app as an output that builds a Python project using `buildPythonPackage`.
 
@@ -54,7 +50,7 @@ nix fmt
   - Edit description
     ```nix
     {
-        description = "Nix Flake Template for Python with builtin Nix Builders";
+        description = "project_name";
     }
     ```
   - Change devShell dependencies
@@ -72,7 +68,7 @@ nix fmt
 
     ```nix
     default = pkgs.${system}.python311Packages.buildPythonPackage rec {
-    pname = "app";
+    pname = "project_name";
     version = "0.1.0";
     src = ./.;
     format = "pyproject";
@@ -84,7 +80,7 @@ nix fmt
 
   - Change executable name for app
     ```nix
-    program = "${self.packages.${system}.default}/bin/app";
+    program = "${self.packages.${system}.default}/bin/project_name";
     ```
 
 - In [`pyproject.toml`](pyproject.toml)
@@ -92,7 +88,7 @@ nix fmt
   - Change project details accordingly
     ```toml
     [project]
-    name = "app"
+    name = "project_name"
     version = "0.1.0"
     description = ""
     authors = [
@@ -125,17 +121,12 @@ nix fmt
   - Rename the [`app/`](app) directory to the name of your project. Make sure its the same as the path in the [`pyproject.toml`](pyproject.toml)
     ```
     📦 python-nix
-    ├─ 📁 app
+    ├─ 📁 project_name
     │  ├─ 🐍 __init__.py
     │  └─ 🐍 main.py
     ```
   - Add necessary code for the program in the previous subdirectory.
   - Make sure that for the [`__init__.py`](app/__init__.py), that it imports from the name of your project, and it imports the necessary functions to be used as a library
-    ```python
-    from app.main import main, get_sha256
-    ```
-  - Add necessary test cases and modifications in the [`tests/`](tests) subdirectory. Prepend all added files in that subdirectory with `test_`
-  - Make sure that for the [`test_main.py`](tests/test_main.py), that it imports from the name of your project, and it imports the necessary functions for testing
     ```python
     from app.main import main, get_sha256
     ```

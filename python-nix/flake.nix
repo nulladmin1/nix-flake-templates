@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Python with builtin Nix Builders";
+  description = "project_name";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -32,7 +32,7 @@
 
     packages = forEachSystem (system: {
       default = pkgsFor.${system}.python311Packages.buildPythonPackage {
-        pname = "app";
+        pname = "project_name";
         version = "0.1.0";
         src = ./.;
         format = "pyproject";
@@ -46,7 +46,7 @@
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/app";
+        program = "${self.packages.${system}.default}/bin/project_name";
       };
     });
   };
