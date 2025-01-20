@@ -1,7 +1,5 @@
 # Nix Flake Template for Python using UV
 
-_All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)_
-
 Initialize using
 
 ```shell
@@ -14,20 +12,16 @@ This is how the structure of the template looks like:
 
 ```
 📦 python-uv
-├─ ⚙️ .python-version
-├─ 📁 app
+├─ 📁 project_name
 │  ├─ 🐍 __init__.py
 │  └─ 🐍 main.py
-├─ 🔒 flake.lock
 ├─ ⚙️ flake.nix
 ├─ ⚙️ pyproject.toml
 ├─ 📃 README.md
-└─ 📁 tests
-│  └─ 🐍 main.py
 └─ 🔒 uv.lock
 ```
 
-It includes a basic Python project that returns an SHA256 encoded string of the user's input. It has a testcase that can be run using `Pytest` or `unittest`.
+It includes a basic Python project that returns an SHA256 encoded string of the user's input.
 
 The flake is able to run in the specified systems listed in the flake. It contains a `devShells` as an output with `Python`,`Setuptools` and `Pip`, and an app as an output that builds a Python project using `buildPythonPackage`.
 
@@ -36,8 +30,6 @@ The flake is able to run in the specified systems listed in the flake. It contai
 ```shell
 nix run
 ```
-
-### Run
 
 ### Go into Development Shell
 
@@ -57,16 +49,8 @@ nix fmt
   - Edit description
     ```nix
     {
-        description = "Nix Flake Template for Python using UV";
+        description = "project_name";
     }
-    ```
-  - Change virtualenv name for devShell
-    ```nix
-    virtualenv = editablePythonSet.mkVirtualEnv "app" workspace.deps.all;
-    ```
-  - Change virtualenv name for the package
-    ```nix
-    default = pythonSet.${system}.mkVirtualEnv "app" workspace.deps.default;
     ```
   - Change executable name for app
     ```nix
@@ -131,4 +115,3 @@ nix fmt
     ```python
     from app.main import main, get_sha256
     ```
-

@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Python using uv2nix";
+  description = "project_name";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -79,7 +79,7 @@
                   fileset = lib.fileset.unions (map (file: old.src + file) [
                     "/pyproject.toml"
                     "/README.md"
-                    "/app"
+                    "/project_name"
                   ]);
                 };
                 nativeBuildInputs =
@@ -120,7 +120,7 @@
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/app";
+        program = "${self.packages.${system}.default}/bin/project_name";
       };
     });
   };
