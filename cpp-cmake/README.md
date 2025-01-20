@@ -56,15 +56,14 @@ nix fmt
   - Edit description
   ```nix
     {
-        description = "Nix Flake Template for C++ using";
+        description = "project_name";
     }
   ```
   - Change the name of the binary
   ```nix
        {
-          program = "${self.packages.${system}.default}/bin/hello";
+          program = "${self.packages.${system}.default}/bin/project_name";
       }
   ```
 - For the structure and code
   - Add necessary code into the [`src/`](src) directory and configure CMake accordingly
-
