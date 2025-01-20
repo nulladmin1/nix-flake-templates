@@ -1,6 +1,4 @@
-# Nix Flake Template for Go with builtin Nix Builders
-
-_All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)_
+# Nix Flake Template for Go with Nixpkgs Builders
 
 Initialize using
 
@@ -11,12 +9,12 @@ nix flake init --template "github:nulladmin1/nix-flake-templates#go-nix"
 This is how the structure of the template looks like:
 
 ```
-📦 go-gomod2nix
-├─ 📁 src
-│  └─ 🐹 hello.go
+📦 go-nix
+├─ 📁
 ├─ 🔒 flake.lock
 ├─ ⚙️ flake.nix
 ├─ 🐹 go.mod
+├─ 🐹 main.go
 └─ 📃 README.md
 ```
 
@@ -50,7 +48,7 @@ nix fmt
 
   ```nix
         {
-            description = "Nix Flake Template for Go with builtin Nix Builders";
+            description = "project_name";
         # ...
         }
   ```
@@ -59,7 +57,7 @@ nix fmt
 
   ```nix
         default = pkgsFor.${system}.buildGoModule {
-            pname = "hello";
+            pname = "project_name";
             version = "0.1.0";
             src = ./.;
             # ...
@@ -78,9 +76,9 @@ nix fmt
 - In [`go.mod`](go.mod)
   - Change modules and Go version
   ```go
-            module hello
+            module project_name
             go 1.22.7
   ```
 - For structure and code
-  - Add necessary code for the program in the src/ directory. Reflect changes in `go.mod`
+  - Add source files and reflect changes in `go.mod`
   - Be sure to change the `vendorHash` (like previously stated)
