@@ -3,7 +3,7 @@
   stdenv,
 }:
 stdenv.mkDerivation {
-  pname = "";
+  pname = "project_name";
   version = "";
 
   src = ./.;
@@ -18,6 +18,6 @@ stdenv.mkDerivation {
     description = "";
     homepage = "";
     license = lib.licenses;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = with lib.maintainers; [];
   };
 }
