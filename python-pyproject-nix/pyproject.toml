@@ -1,5 +1,5 @@
 [project]
-name = "app"
+name = "project_name"
 version = "0.1.0"
 description = ""
 authors = [
@@ -21,4 +21,4 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-app = "app:main"
+project_name = "project_name:main"

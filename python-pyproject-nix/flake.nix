@@ -48,7 +48,7 @@
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/app";
+        program = "${self.packages.${system}.default}/bin/project_name";
       };
     });
   };
