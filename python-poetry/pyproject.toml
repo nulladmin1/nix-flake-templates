@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "app"
+name = "project_name"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
@@ -17,4 +17,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-app = "app.main:main"
+project_name = "project_name.main:main"

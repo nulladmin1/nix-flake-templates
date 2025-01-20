@@ -1,5 +1,5 @@
 {
-  description = "Nix Flake Template for Python using Poetry";
+  description = "project_name";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -33,7 +33,7 @@
         (poetry2nix-lib.${system}.mkPoetryEnv {
           projectDir = ./.;
           editablePackageSources = {
-            app = ./app;
+            project_name = ./project_name;
           };
         })
         .env
@@ -49,7 +49,7 @@
     in {
       default = {
         type = "app";
-        program = "${app}/bin/app";
+        program = "${app}/bin/project_name";
       };
     });
   };
