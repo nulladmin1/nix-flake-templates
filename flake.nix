@@ -5,6 +5,11 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     systems.url = "github:nix-systems/default";
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+
+    cli = {
+      url = "app/";
+      inputs.systems.follows = "systems";
+    };
   };
 
   outputs = {
@@ -12,11 +17,14 @@
     nixpkgs,
     systems,
     pre-commit-hooks,
+    cli,
     ...
   }: let
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
   in {
+    inherit (cli) apps;
+
     checks = forEachSystem (system: {
       pre-commit-run = pre-commit-hooks.lib.${system}.run {
         src = ./.;
