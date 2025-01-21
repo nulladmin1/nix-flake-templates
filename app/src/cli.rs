@@ -183,8 +183,8 @@ impl Cli {
     fn get_template() -> Result<String, Box<dyn Error>> {
         println!("📦 What {GREEN}template{RESET} do you want to use? ");
 
-        (1..TEMPLATES.len()).for_each(|i| {
-            let template_str = TEMPLATES[i].print_str;
+        (1..TEMPLATES.len() + 1).for_each(|i| {
+            let template_str = TEMPLATES[i - 1].print_str;
             println!("  {BLUE}{i}){RESET} {template_str}");
         });
         println!("👆 Pick a number or enter the code for the template: ");
