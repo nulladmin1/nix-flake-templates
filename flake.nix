@@ -7,7 +7,7 @@
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
 
     cli = {
-      url = "app/";
+      url = "path:app/";
       inputs.systems.follows = "systems";
     };
   };

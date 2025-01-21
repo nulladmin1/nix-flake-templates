@@ -12,11 +12,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-d7n/zxTX7i0413J71vpI1EHcWS6gzo6Oiv0kW00V0ng=",
-        "path": "/nix/store/44zfaf0fc3nxp2h9mvkik5a1kcs97w2b-source/app",
+        "path": "app/",
         "type": "path"
       },
       "original": {
-        "path": "/nix/store/44zfaf0fc3nxp2h9mvkik5a1kcs97w2b-source/app",
+        "path": "app/",
         "type": "path"
       }
     },
