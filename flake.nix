@@ -51,15 +51,15 @@
         path = ./default;
       };
       go-nix = {
-        description = "Nix Flake Template for Go with builtin Nix Builders";
+        description = "Nix Flake Template for Go with Nixpkgs Builders";
         path = ./go-nix;
       };
       python-nix = {
-        description = "Nix Flake Template for Python using builtin Nix builders";
+        description = "Nix Flake Template for Python using Nixpkgs builders";
         path = ./python-nix;
       };
       python-pyproject-nix = {
-        description = "Nix Flake Template for Python using pyproject-nix";
+        description = "Nix Flake Template for Python using Pyproject-nix";
         path = ./python-pyproject-nix;
       };
       python-poetry = {
@@ -87,7 +87,7 @@
         path = ./vimPlugin;
       };
       flutter-nix = {
-        description = "Nix Flake Template for Flutter using Nix Builders";
+        description = "Nix Flake Template for Flutter using Nixpkgs Builders";
         path = ./flutter-nix;
       };
       nixpkgs = {
