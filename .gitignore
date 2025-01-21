@@ -3,3 +3,4 @@
 **/__pycache__
 **.lock
 !flake.lock
+!app/Cargo.lock
