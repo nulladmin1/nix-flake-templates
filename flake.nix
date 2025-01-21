@@ -7,7 +7,7 @@
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
 
     cli = {
-      url = "path:app/";
+      url = "github:nulladmin1/getflake";
       inputs.systems.follows = "systems";
     };
   };
