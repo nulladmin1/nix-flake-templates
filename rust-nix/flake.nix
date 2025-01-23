@@ -31,7 +31,8 @@
         pname = "project_name";
         version = "0.1.0";
         src = ./.;
-        cargoHash = pkgsFor.${system}.lib.fakeHash;
+        cargoHash = "sha256-MtgvLheMrKnQCZPsI80eFsQFMHC/Xiqi2Tjc4CtmQnU=";
+        # cargoHash = pkgsFor.${system}.lib.fakeHash;
       };
     });
 
