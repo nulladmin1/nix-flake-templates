@@ -4,6 +4,9 @@
 
 A collection of Nix Flake Templates
 
+Use [`getflake`](https://github.com/nulladmin1/getflake) to initialize flake (recommended)
+```shell
+```
 Initialize using
 
 ```shell
