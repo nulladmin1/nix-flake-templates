@@ -74,6 +74,10 @@
         description = "Nix Flake Template for Rust using Fenix and Naersk";
         path = ./rust-fenix-naersk;
       };
+      rust-nix = {
+        description = "Nix Flake Template for Rust using Nixpkgs Builders";
+        path = ./rust-nix;
+      };
       cpp-cmake = {
         description = "Nix Flake Template for C++ using CMake";
         path = ./cpp-cmake;
