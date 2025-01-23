@@ -91,7 +91,7 @@
         path = ./flutter-nix;
       };
       nixpkgs = {
-        description = "Nix Flake Template for Nixpkgs";
+        description = "Nix Flake Template for Nixpkgs Development";
         path = ./nixpkgs;
       };
       flutter = self.templates.flutter-nix;
