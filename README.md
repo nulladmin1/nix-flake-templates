@@ -6,8 +6,9 @@ A collection of Nix Flake Templates
 
 Use [`getflake`](https://github.com/nulladmin1/getflake) to initialize flake (recommended)
 ```shell
+nix run github:nulladmin1/getflake
 ```
-Initialize using
+Or initialize using
 
 ```shell
 nix flake init --template "github:nulladmin1/nix-flake-templates#${TYPE}"
