@@ -11,10 +11,6 @@ readme = "README.md"
 dependencies = [
 ]
 
-[project.optional-dependencies]
-test = [
-    "pytest"
-]
 
 [build-system]
 requires = ["setuptools"]
