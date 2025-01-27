@@ -4,4 +4,5 @@
 **.lock
 !flake.lock
 !app/Cargo.lock
+!examples/**
 .direnv/

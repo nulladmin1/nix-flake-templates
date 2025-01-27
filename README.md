@@ -4,10 +4,19 @@
 
 A collection of Nix Flake Templates
 
+## Table of Contents
+
+- [Usage](#usage)
+- [Examples](#examples)
+
+## Usage
+
 Use [`getflake`](https://github.com/nulladmin1/getflake) to initialize flake (recommended)
+
 ```shell
 nix run github:nulladmin1/getflake
 ```
+
 Or initialize using
 
 ```shell
@@ -30,3 +39,13 @@ Where `${TYPE}` is the supported type of template:
 | Rust (using Nixpkgs builders)     | [rust-nix](rust-nix)                         | [README](rust-nix/README.md)             |
 | C++ (using `CMake`)               | [cpp-cmake](cpp-cmake)                       | [README](cpp-cmake/README.md)            |
 | Flutter (using Nixpkgs builders)  | [flutter-nix](flutter-nix)                   | [README](flutter-nix/README.md)          |
+
+## Examples
+
+### Real World
+
+[`getflake`](https://github.com/nulladmin1/getflake) - A simple to program to automatically instantiate my [Nix-Flake-Templates](https://github.com/nulladmin1/nix-flake-templates)
+
+### in [Examples/](examples/)
+
+[`sha256_python_with_tests`](examples/sha256_python_with_tests) - A simple Python program with testcases to encode a user-inputted string in SHA256
