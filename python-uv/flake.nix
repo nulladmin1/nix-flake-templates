@@ -73,7 +73,7 @@
             editableOverlay
 
             (final: prev: {
-              app = prev.app.overrideAttrs (old: {
+              project_name = prev.project_name.overrideAttrs (old: {
                 src = lib.fileset.toSource {
                   root = old.src;
                   fileset = lib.fileset.unions (map (file: old.src + file) [
@@ -92,7 +92,7 @@
           ]
         );
 
-        virtualenv = editablePythonSets.mkVirtualEnv "app" workspace.deps.all;
+        virtualenv = editablePythonSets.mkVirtualEnv "project_name" workspace.deps.all;
       in
         pkgsFor.${system}.mkShell {
           packages = with pkgsFor.${system}; [
@@ -114,7 +114,7 @@
     });
 
     packages = forEachSystem (system: {
-      default = pythonSets.${system}.mkVirtualEnv "app" workspace.deps.default;
+      default = pythonSets.${system}.mkVirtualEnv "project_name" workspace.deps.default;
     });
 
     apps = forEachSystem (system: {
