@@ -100,7 +100,8 @@
       };
       flutter = self.templates.flutter-nix;
       pyproject = self.templates.python-pyproject-nix;
-      python = self.templates.python-poetry;
+      python = self.templates.python-nix;
+      poetry = self.templates.python-poetry;
       uv = self.templates.python-uv;
       rust = self.templates.rust-fenix-naersk;
       cpp = self.templates.cpp-cmake;

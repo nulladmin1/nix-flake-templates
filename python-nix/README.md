@@ -5,6 +5,10 @@ _All of this information is also included in the [README.md](https://github.com/
 Initialize using
 
 ```shell
+nix flake init --template "github:nulladmin1/nix-flake-templates#python"
+```
+OR
+```shell
 nix flake init --template "github:nulladmin1/nix-flake-templates#python-nix"
 ```
 
