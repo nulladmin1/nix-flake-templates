@@ -44,7 +44,13 @@ Where `${TYPE}` is the supported type of template:
 
 ### Real World
 
-[`getflake`](https://github.com/nulladmin1/getflake) - A simple to program to automatically instantiate my [Nix-Flake-Templates](https://github.com/nulladmin1/nix-flake-templates)
+[`getflake`](https://github.com/nulladmin1/getflake) (using `rust-fenix-naersk`) - A simple to program to automatically instantiate my [Nix-Flake-Templates](https://github.com/nulladmin1/nix-flake-templates)
+
+[`eightQueens`](https://github.com/nulladmin1/eightQueens) (using `cpp-cmake`) - A rendition of the famous [Eight Queens Puzzle](https://en.wikipedia.org/wiki/Eight_queens_puzzle) in `C++`
+
+[`mp2ExtraCredit`](https://github.com/nulladmin1/eightQueens) (using `cpp-cmake`) - A solution of a plague simulation I had to do for Computer Science II, in `C++`
+
+[`josephus-rs`](https://github.com/nulladmin1/josephus-rs) (using `rust-fenix-naersk`) - An implementation of the [Josephus problem](https://en.wikipedia.org/wiki/Josephus_problem) in `Rust`
 
 ### in [Examples/](examples/)
 
