@@ -99,7 +99,7 @@
         path = ./nixpkgs;
       };
       bash = {
-        description = "Nix Flake Template for Bash Development";
+        description = "Nix Flake Template for Bash using Nixpkgs Builders";
         path = ./bash;
       };
       sh = self.templates.bash;
