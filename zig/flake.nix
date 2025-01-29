@@ -20,19 +20,28 @@
     devShells = forEachSystem (system: {
       default = pkgsFor.${system}.mkShell {
         packages = with pkgsFor.${system}; [
-          hello
+          zig
+          zls
         ];
       };
     });
 
     packages = forEachSystem (system: {
-      default = pkgsFor.${system}.hello;
+      default = pkgsFor.${system}.stdenv.mkDerivation {
+        pname = "project_name";
+        version = "0.1.0";
+        src = ./.;
+
+        nativeBuildInputs = with pkgsFor.${system}; [
+          zig.hook
+        ];
+      };
     });
 
     apps = forEachSystem (system: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/hello";
+        program = "${self.packages.${system}.default}/bin/project_name";
       };
     });
   };
