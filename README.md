@@ -41,6 +41,7 @@ Where `${TYPE_KEYWORD}` is the supported type keyword of template:
 | `vim`                        | Vim Plugins (using Nixpkgs builders) | [vimPlugin](vimPlugin)                       | [README](vimPlugin/README.md)            |
 | `flutter`, `flutter-nix`     | Flutter (using Nixpkgs builders)     | [flutter-nix](flutter-nix)                   | [README](flutter-nix/README.md)          |
 | `bash`, `sh`                 | Bash (using Nixpkgs builders)        | [bash](bash)                                 | [README](bash/README.md)                 |
+| `zig`                        | Zig (using Nixpkgs builders)         | [zig](zig)                                   | [README](zig/README.md)                  |
 
 ## Examples
 

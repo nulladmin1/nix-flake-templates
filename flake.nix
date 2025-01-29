@@ -102,6 +102,10 @@
         description = "Nix Flake Template for Bash using Nixpkgs Builders";
         path = ./bash;
       };
+      zig = {
+        description = "Nix Flake Template for Zig using Nixpkgs Builders";
+        path = ./zig;
+      };
       sh = self.templates.bash;
       flutter = self.templates.flutter-nix;
       pyproject = self.templates.python-pyproject-nix;
