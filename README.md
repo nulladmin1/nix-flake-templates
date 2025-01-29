@@ -40,6 +40,7 @@ Where `${TYPE_KEYWORD}` is the supported type keyword of template:
 | `cpp`, `cpp-cmake`           | C++ (using `CMake`)                  | [cpp-cmake](cpp-cmake)                       | [README](cpp-cmake/README.md)            |
 | `vim`                        | Vim Plugins (using Nixpkgs builders) | [vimPlugin](vimPlugin)                       | [README](vimPlugin/README.md)            |
 | `flutter`, `flutter-nix`     | Flutter (using Nixpkgs builders)     | [flutter-nix](flutter-nix)                   | [README](flutter-nix/README.md)          |
+| `bash`, `sh`                 | Bash (using Nixpkgs builders)        | [bash](bash)                                 | [README](bash/README.md)                 |
 
 ## Examples
 

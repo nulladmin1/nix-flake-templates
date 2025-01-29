@@ -98,6 +98,11 @@
         description = "Nix Flake Template for Nixpkgs Development";
         path = ./nixpkgs;
       };
+      bash = {
+        description = "Nix Flake Template for Bash Development";
+        path = ./bash;
+      };
+      sh = self.templates.bash;
       flutter = self.templates.flutter-nix;
       pyproject = self.templates.python-pyproject-nix;
       python = self.templates.python-nix;
