@@ -4,6 +4,8 @@
 
 A collection of Nix Flake Templates
 
+![demo](./demo.gif)
+
 ## Table of Contents
 
 - [Usage](#usage)
