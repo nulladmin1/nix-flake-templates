@@ -10,12 +10,13 @@ This is how the structure of the template looks like:
 
 ```
 📦 go-nix
-├─ 📁
-├─ 🔒 flake.lock
-├─ ⚙️ flake.nix
-├─ 🐹 go.mod
-├─ 🐹 main.go
-└─ 📃 README.md
+├── ⚙️ .envrc
+├── 🙈 .gitignore
+├── 📃 README.md
+├── ❄️ flake.lock
+├── ❄️ flake.nix
+├── 🐹 go.mod
+└── 🐹 main.go
 ```
 
 It includes a basic Go project that prints Hello World!

@@ -12,12 +12,14 @@ This is how to structure of the template looks like:
 
 ```
 📦 bevy
-├─ 🔒 Cargo.lock
-├─ ⚙️ Cargo.toml
-├─ ⚙️ flake.nix
-├─ 📁 src
-│  ├─ 🦀 main.rs
-├─ 📃 README.md
+├── ⚙️ .envrc
+├── 🙈 .gitignore
+├── 🔒Cargo.lock
+├── ⚙️ Cargo.toml
+├── 📃 README.md
+├── ❄️ flake.nix
+└── 📁src
+    └── 🦀 main.rs
 ```
 
 It includes a really simple Hello World program

@@ -7,7 +7,9 @@ Initialize using
 ```shell
 nix flake init --template "github:nulladmin1/nix-flake-templates#python"
 ```
+
 OR
+
 ```shell
 nix flake init --template "github:nulladmin1/nix-flake-templates#python-nix"
 ```
@@ -16,13 +18,14 @@ This is how the structure of the template looks like:
 
 ```
 📦 python-nix
-├─ 📁 project_name
-│  ├─ 🐍 __init__.py
-│  └─ 🐍 main.py
-├─ 🔒 flake.lock
-├─ ⚙️ flake.nix
-├─ ⚙️ pyproject.toml
-└─ 📃 README.md
+├── ⚙️ .envrc
+├── 🙈 .gitignore
+├── 📃 README.md
+├── ❄️ flake.nix
+├── 📁 project_name
+│   ├── 🐍 __init__.py
+│   └── 🐍 main.py
+└── ⚙️ pyproject.toml
 ```
 
 It includes a basic Python project that returns an SHA256 encoded string of the user's input.

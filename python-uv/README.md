@@ -5,7 +5,9 @@ Initialize using
 ```shell
 nix flake init --template "github:nulladmin1/nix-flake-templates#uv"
 ```
+
 OR
+
 ```shell
 nix flake init --template "github:nulladmin1/nix-flake-templates#python-uv"
 ```
@@ -15,14 +17,16 @@ nix flake init --template "github:nulladmin1/nix-flake-templates#python-uv"
 This is how the structure of the template looks like:
 
 ```
-📦 python-uv
-├─ 📁 project_name
-│  ├─ 🐍 __init__.py
-│  └─ 🐍 main.py
-├─ ⚙️ flake.nix
-├─ ⚙️ pyproject.toml
-├─ 📃 README.md
-└─ 🔒 uv.lock
+📦 python-poetry
+├── ⚙️ .envrc
+├── 🙈 .gitignore
+├── 📃 README.md
+├── ❄️ flake.nix
+├── 📁 project_name
+│   ├── 🐍 __init__.py
+│   └── 🐍 main.py
+├── ⚙️ pyproject.toml
+└── 🔒uv.lock
 ```
 
 It includes a basic Python project that returns an SHA256 encoded string of the user's input.

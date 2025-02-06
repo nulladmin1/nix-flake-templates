@@ -19,15 +19,14 @@ This is how the structure of the template looks like:
 
 ```
 📦 cpp-cmake
-├─ 🔒 Cargo.lock
-├─ ⚙️ CMakeLists.txt
-├─ 🔒 flake.lock
-├─ ⚙️ flake.nix
-├─ 📁 src
-│  ├─ 📝 hello.cpp
-│  ├─ ⚙️ CMakeLists.txt
-├─ 🔨 Makefile
-├─ 📃 README.md
+├── ⚙️ .envrc
+├── 🙈 .gitignore
+├── ⚙️ CMakeLists.txt
+├── 📃 README.md
+├── ❄️ flake.nix
+└── src
+    ├── ⚙️ CMakeLists.txt
+    └── 📝 hello.cpp
 ```
 
 It includes a really simple Hello World program

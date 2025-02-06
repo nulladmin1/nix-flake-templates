@@ -14,6 +14,16 @@ OR
 nix flake init --template "github:nulladmin1/nix-flake-templates#sh"
 ```
 
+This is the structure of the template:
+
+```
+📦 bash
+├── ⚙️ .envrc
+├── 📃 README.md
+├── ❄️ flake.nix
+└── 🐚 hello.sh
+```
+
 ### Run using Nix
 
 ```shell

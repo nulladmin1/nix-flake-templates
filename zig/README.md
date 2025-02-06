@@ -8,6 +8,20 @@ Initialize using
 nix flake init --template "github:nulladmin1/nix-flake-templates#zig"
 ```
 
+This is how to structure of the template looks like:
+
+```
+📦 zig
+├── ⚙️ .envrc
+├── ⚙️ build.zig
+├── ⚙️ build.zig.zon
+├── ❄️ default.nix
+├── 📃 README.md
+├── ❄️ flake.nix
+└── 📁 src
+    └── 📝 main.zig
+```
+
 The flake is able to run in the specified systems listed in the flake. It contains a `devShells` as an output with `Zig`, a package that runs `hello` by building it with Nixpkgs' `zig.hook`, and an app that runs the previously mentioned package.
 
 ### Run using Nix

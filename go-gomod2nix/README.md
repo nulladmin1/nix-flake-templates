@@ -18,14 +18,14 @@ This is how the structure of the template looks like:
 
 ```
 📦 go-gomod2nix
-├─ 📁 src
-│  └─ 🐹 hello.go
-├─ 🙈 .gitignore
-├─ 🔒 flake.lock
-├─ ⚙️ flake.nix
-├─ 🐹 go.mod
-├─ ⚙️ gomod2nix.toml
-├─ 📃 README.md
+├── ⚙️ .envrc
+├── 🙈 .gitignore
+├── 📃 README.md
+├── ❄️ flake.nix
+├── 🐹 go.mod
+├── ⚙️ gomod2nix.toml
+└── 📁 src
+    └── 🐹 hello.go
 ```
 
 It includes a basic Go project that prints Hello World!
@@ -87,4 +87,3 @@ nix fmt
       ```shell
             gomod2nix generate
       ```
-

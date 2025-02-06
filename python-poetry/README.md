@@ -19,12 +19,14 @@ This is how the structure of the template looks like:
 
 ```
 📦 python-poetry
-├─ 📁 project_name
-│  ├─ 🐍 __init__.py
-│  └─ 🐍 main.py
-├─ ⚙️ flake.nix
-├─ ⚙️ pyproject.toml
-└─ 📃 README.md
+├── ⚙️ .envrc
+├── 🙈 .gitignore
+├── 📃 README.md
+├── ❄️ flake.nix
+├── 📁 project_name
+│   ├── 🐍 __init__.py
+│   └── 🐍 main.py
+└── ⚙️ pyproject.toml
 ```
 
 It includes a basic Poetry project that returns an SHA256 encoded string of the user's input.

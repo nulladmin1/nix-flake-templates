@@ -1,4 +1,4 @@
-# Nix Flake Template for Flutter using builtin Nix builders
+# Nix Flake Template for Flutter using Nixpkgs builders
 
 _All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)_
 
@@ -9,6 +9,16 @@ nix flake init --template "github:nulladmin1/nix-flake-templates#flutter"
 ```
 
 It does not contain an existing flutter project - you have to initialize one using `flutter create .`
+
+This is how the structure of the template looks like
+
+```
+📦 flutter-nix
+├── ⚙️ .envrc
+├── 🙈 .gitignore
+├── 📃 README.md
+└── ❄️ flake.nix
+```
 
 ### Run using Nix
 
@@ -71,4 +81,3 @@ nix fmt
     ```nix
     program = "${self.packages.${system}.default}/bin/app";
     ```
-

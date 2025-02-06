@@ -11,13 +11,15 @@ nix flake init --template "github:nulladmin1/nix-flake-templates#rust-nix"
 This is how to structure of the template looks like:
 
 ```
-📦 rust-nix
-├─ 🔒Cargo.lock
-├─ ⚙️ Cargo.toml
-├─ ⚙️ flake.nix
-├─ 📁 src
-│  ├─ 🦀 main.rs
-├─ 📃 README.md
+📦 rust-fenix-naersk
+├── ⚙️ .envrc
+├── 🙈 .gitignore
+├── 🔒 Cargo.lock
+├── ⚙️ Cargo.toml
+├── 📃 README.md
+├── ❄️ flake.nix
+└── 📁 src
+    └── 🦀 main.rs
 ```
 
 It includes a really simple Hello World program

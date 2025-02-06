@@ -8,6 +8,16 @@ Initialize using
 nix flake init --template "github:nulladmin1/nix-flake-templates#nixpkgs"
 ```
 
+This is how the structure of the template looks like:
+
+```
+📦 nixpkgs
+├── ⚙️ .envrc
+├── 📃 README.md
+├── ❄️ flake.nix
+└── ❄️ package.nix
+```
+
 This flake provides a really simple flake to be used when making `Nixpkgs` packages. It has the `nixfmt-rfc-style` formatter used in `nixpkgs`, and a package and app declaration using for building and executing the [package.nix](./package.nix) file.
 
 ### Run using Nix

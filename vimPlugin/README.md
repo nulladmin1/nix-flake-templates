@@ -6,6 +6,16 @@ Initialize using
 nix flake init --template "github:nulladmin1/nix-flake-templates#vimPlugin"
 ```
 
+This is how to structure of the template looks like:
+
+```
+📦 vimPlugin
+├── ⚙️ .envrc
+├── ❄️ default.nix
+├── 📃 README.md
+└── ❄️ flake.nix
+```
+
 The flake contains a packages output that calls the default.nix that actually houses the derivation that builds the vimPlugin.
 
 ### Build the plugin
