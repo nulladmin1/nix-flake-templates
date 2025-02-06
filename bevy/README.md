@@ -1,24 +1,17 @@
-# Nix Flake Template for Rust using Fenix and Naersk
+# Nix Flake Template for Bevy (rust) using Fenix and Naersk
 
 _All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)_
 
 Initialize using
 
 ```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#rust-fenix-naersk"
-```
-
-OR
-Initialize using
-
-```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#rust"
+nix flake init --template "github:nulladmin1/nix-flake-templates#bevy
 ```
 
 This is how to structure of the template looks like:
 
 ```
-📦 rust-fenix-naersk
+📦 bevy
 ├─ 🔒 Cargo.lock
 ├─ ⚙️ Cargo.toml
 ├─ ⚙️ flake.nix
@@ -29,6 +22,13 @@ This is how to structure of the template looks like:
 
 It includes a really simple Hello World program
 
+Inspired from:
+
+- [drxm1:bevy-project-template-nixos-wayland](https://github.com/drxm1/bevy-project-template-nixos-wayland/blob/main/flake.nix)
+- [mith:nix-templates/bevy](https://github.com/mith/nix-templates/blob/d8547e8c67b112e1e5a367a7ace69fcd0bb7e82b/bevy/flake.nix)
+- [mith:nix-templates/bevy-web](https://github.com/mith/nix-templates/blob/d8547e8c67b112e1e5a367a7ace69fcd0bb7e82b/bevy-web/flake.nix)
+
+<!-- TODO - figure out packages and apps
 ### Run using `naersk` (Recommended)
 
 Run app
@@ -36,6 +36,7 @@ Run app
 ```shell
 nix run
 ```
+-->
 
 ### Run using `Cargo`
 

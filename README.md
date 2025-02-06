@@ -44,6 +44,7 @@ Where `${TYPE_KEYWORD}` is the supported type keyword of template:
 | `flutter`, `flutter-nix`     | Flutter (using Nixpkgs builders)     | [flutter-nix](flutter-nix)                   | [README](flutter-nix/README.md)          |
 | `bash`, `sh`                 | Bash (using Nixpkgs builders)        | [bash](bash)                                 | [README](bash/README.md)                 |
 | `zig`                        | Zig (using Nixpkgs builders)         | [zig](zig)                                   | [README](zig/README.md)                  |
+| `bevy`                       | Bevy (using `rust-fenix-naersk`)     | [bevy](bevy)                                 | [README](bevy/README.md)                 |
 
 ## Examples
 

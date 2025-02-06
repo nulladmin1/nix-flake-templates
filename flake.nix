@@ -106,6 +106,10 @@
         description = "Nix Flake Template for Zig using Nixpkgs Builders";
         path = ./zig;
       };
+      bevy = {
+        description = "Nix Flake Template for Bevy using Nixpkgs Builders";
+        path = ./bevy;
+      };
       sh = self.templates.bash;
       flutter = self.templates.flutter-nix;
       pyproject = self.templates.python-pyproject-nix;
