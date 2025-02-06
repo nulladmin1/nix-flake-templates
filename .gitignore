@@ -3,6 +3,6 @@
 **/__pycache__
 **.lock
 !flake.lock
-!app/Cargo.lock
+!**/Cargo.lock
 !examples/**
 .direnv/
