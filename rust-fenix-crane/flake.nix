@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     systems.url = "github:nix-systems/default";
-    naersk.url = "github:nix-community/naersk";
+    crane.url = "github:ipetkov/crane";
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,8 +14,8 @@
   outputs = {
     self,
     nixpkgs,
-    naersk,
     fenix,
+    crane,
     systems,
     ...
   }: let
@@ -27,30 +27,30 @@
           fenix.overlays.default
         ];
       });
-    rust-toolchain = forEachSystem (system: pkgsFor.${system}.fenix.stable);
+    rust-toolchain = forEachSystem (system:
+      pkgsFor.${system}.fenix.stable.withComponents [
+        "cargo"
+        "llvm-tools"
+        "rustc"
+      ]);
+    craneLib = forEachSystem (system: (crane.mkLib pkgsFor.${system}).overrideToolchain rust-toolchain.${system});
   in {
     formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
 
     devShells = forEachSystem (system: {
-      default = pkgsFor.${system}.mkShell {
-        packages = with rust-toolchain.${system}; [
-          cargo
-          rustc
-          clippy
-          rustfmt
-        ];
-        RUST_SRC_PATH = "${rust-toolchain.${system}.rust-src}/lib/rustlib/src/rust/library";
-      };
+      default = craneLib.${system}.devShell {};
     });
 
-    packages = forEachSystem (system: {
-      default =
-        (pkgsFor.${system}.callPackage naersk {
-          inherit (rust-toolchain.${system}) cargo rustc;
-        })
-        .buildPackage {
-          src = ./.;
-        };
+    packages = forEachSystem (system: let
+      src = craneLib.${system}.cleanCargoSource ./.;
+      cargoArtifact = craneLib.${system}.buildDepsOnly {
+        inherit src;
+      };
+    in {
+      default = craneLib.${system}.buildPackage {
+        inherit cargoArtifact;
+        inherit src;
+      };
     });
 
     apps = forEachSystem (system: {
