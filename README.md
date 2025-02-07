@@ -45,6 +45,7 @@ Where `${TYPE_KEYWORD}` is the supported type keyword of template:
 | `bash`, `sh`                 | Bash (using Nixpkgs builders)        | [bash](bash)                                 | [README](bash/README.md)                 |
 | `zig`                        | Zig (using Nixpkgs builders)         | [zig](zig)                                   | [README](zig/README.md)                  |
 | `bevy`                       | Bevy (using `rust-fenix-naersk`)     | [bevy](bevy)                                 | [README](bevy/README.md)                 |
+| `rust-fenix-crane`, `crane`  | Rust (using `fenix` and `crane`)     | [rust-fenix-crane](rust-fenix-crane)         | [README](rust-fenix-crane/README.md)     |
 
 ## Examples
 

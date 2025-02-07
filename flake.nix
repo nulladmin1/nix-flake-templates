@@ -110,6 +110,11 @@
         description = "Nix Flake Template for Bevy using Nixpkgs Builders";
         path = ./bevy;
       };
+      rust-fenix-crane = {
+        description = "Nix Flake Template for Rust using Fenix and Crane";
+        path = ./rust-fenix-crane;
+      };
+      crane = self.templates.rust-fenix-crane;
       sh = self.templates.bash;
       flutter = self.templates.flutter-nix;
       pyproject = self.templates.python-pyproject-nix;

@@ -1,24 +1,23 @@
-# Nix Flake Template for Rust using Fenix and Naersk
+# Nix Flake Template for Rust using Fenix and Crane
 
 _All of this information is also included in the [README.md](https://github.com/nulladmin1/nix-flake-templates/blob/main/flake.nix)_
 
 Initialize using
 
 ```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#rust-fenix-naersk"
+nix flake init --template "github:nulladmin1/nix-flake-templates#rust-fenix-crane"
 ```
 
 OR
-Initialize using
 
 ```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#rust"
+nix flake init --template "github:nulladmin1/nix-flake-templates#crane"
 ```
 
 This is how to structure of the template looks like:
 
 ```
-📦 rust-fenix-naersk
+📦 rust-fenix-crane
 ├── ⚙️ .envrc
 ├── 🙈 .gitignore
 ├── 🔒 Cargo.lock
@@ -31,7 +30,7 @@ This is how to structure of the template looks like:
 
 It includes a really simple Hello World program
 
-### Run using `naersk` (Recommended)
+### Run using `crane` (Recommended)
 
 Run app
 
