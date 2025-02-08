@@ -105,7 +105,7 @@
         path = ./zig;
       };
       bevy = {
-        description = "Nix Flake Template for Bevy using Nixpkgs Builders";
+        description = "Nix Flake Template for Bevy using Fenix and Crane";
         path = ./bevy;
       };
       rust-fenix-crane = {

@@ -32,7 +32,7 @@ Where `${TYPE_KEYWORD}` is the supported type keyword of template:
 | Type Keyword                        | Type                           | Subdirectory                                 | Documentation                            |
 | ----------------------------------- | ------------------------------ | -------------------------------------------- | ---------------------------------------- |
 | `bash`, `sh`                        | Bash using Nixpkgs Builders    | [bash](bash)                                 | [README](bash/README.md)                 |
-| `bevy`                              | Bevy using Nixpkgs Builders    | [bevy](bevy)                                 | [README](bevy/README.md)                 |
+| `bevy`                              | Bevy using Fenix and Crane     | [bevy](bevy)                                 | [README](bevy/README.md)                 |
 | `cpp`, `cpp-cmake`                  | C++ using CMake                | [cpp-cmake](cpp-cmake)                       | [README](cpp-cmake/README.md)            |
 | `default`                           | Development                    | [default](default)                           | [README](default/README.md)              |
 | `flutter`, `flutter-nix`            | Flutter using Nixpkgs Builders | [flutter-nix](flutter-nix)                   | [README](flutter-nix/README.md)          |
