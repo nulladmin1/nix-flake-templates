@@ -23,8 +23,6 @@
     forEachSystem = nixpkgs.lib.genAttrs (import systems);
     pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
   in {
-    inherit (cli) apps;
-
     checks = forEachSystem (system: {
       pre-commit-run = pre-commit-hooks.lib.${system}.run {
         src = ./.;
@@ -126,5 +124,49 @@
       go = self.templates.go-gomod2nix;
       vim = self.templates.vimPlugins;
     };
+
+    apps = forEachSystem (system: let
+      inherit (pkgsFor.${system}.lib) getExe;
+      jq = getExe pkgsFor.${system}.jq;
+      prettier = getExe pkgsFor.${system}.nodePackages.prettier;
+    in {
+      makeTable = {
+        type = "app";
+        program = getExe (pkgsFor.${system}.writeShellScriptBin "makeTable" ''
+          flake_templates=$(nix flake show --json | ${jq} '.templates')
+
+          table="| Type Keyword | Type | Subdirectory | Documentation |
+          |--------------|------|--------------|--------------|"
+
+          declare -A type_map
+          declare -A keywords_map
+
+          while IFS='@' read -r key desc; do
+            desc=$(echo "$desc" | xargs)
+
+            if [[ -z "''${type_map[$desc]:-}" ]] || [[ ''${#key} -gt ''${#type_map[$desc]} ]]; then
+                type_map["$desc"]="$key"
+            fi
+
+            if [[ -z "''${keywords_map[$desc]:-}" ]]; then
+                keywords_map["$desc"]="\`$key\`"
+            else
+                keywords_map["$desc"]="''${keywords_map[$desc]}, \`$key\`"
+            fi
+          done < <(echo "$flake_templates" | ${jq} -r 'to_entries | sort_by(.value.description)[] | "\(.key)@\(.value.description | sub("^Nix Flake Template for "; ""))"')
+
+          mapfile -t sorted_descriptions < <(printf "%s\n" "''${!type_map[@]}" | sort)
+
+          for desc in "''${sorted_descriptions[@]}"; do
+              keywords="''${keywords_map[$desc]}"
+              type="''${type_map[$desc]}"
+              table+="
+          | $keywords | $desc | [$type]($type) | [README]($type/README.md) |"
+          done
+
+          echo -e "$table" | ${prettier} --parser markdown
+        '');
+      };
+    });
   };
 }

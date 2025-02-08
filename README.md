@@ -27,25 +27,25 @@ nix flake init --template "github:nulladmin1/nix-flake-templates#${TYPE_KEYWORD}
 
 Where `${TYPE_KEYWORD}` is the supported type keyword of template:
 
-| Type Keyword                 | Type                                 | Subdirectory                                 | Documentation                            |
-| ---------------------------- | ------------------------------------ | -------------------------------------------- | ---------------------------------------- |
-| _empty_, `default`           | _Default_                            | [default](default)                           | [default](default/README.md)             |
-| `nixpkgs`                    | Nixpkgs                              | [nixpkgs](nixpkgs)                           | [README](nixpkgs/README.md)              |
-| `poetry`, `python-poetry`    | Python (using `poetry2nix`)          | [python-poetry](python-poetry)               | [README](python-poetry/README.md)        |
-| `pyproject`, `pyproject-nix` | Python (using `pyproject-nix`)       | [python-pyproject-nix](python-pyproject-nix) | [README](python-pyproject-nix/README.md) |
-| `python`, `python-nix`       | Python (using Nixpkgs builders)      | [python-nix](python-nix)                     | [README](python-nix/README.md)           |
-| `uv`, `python-uv`            | Python (using `uv2nix`)              | [python-uv](python-uv)                       | [README](python-uv/README.md)            |
-| `go-nix`                     | Go (using Nixpkgs builders)          | [go-nix](go-nix)                             | [README](go-nix/README.md)               |
-| `go`, `go-gomod2nix`         | Go (using `gomod2nix`                | [go-gomod2nix](go-gomod2nix)                 | [README](go-gomod2nix/README.md)         |
-| `rust`, `rust-fenix-naersk`  | Rust (using `fenix` and `naersk`)    | [rust-fenix-naersk](rust-fenix-naersk)       | [README](rust-fenix-naersk/README.md)    |
-| `rust-nix`                   | Rust (using Nixpkgs builders)        | [rust-nix](rust-nix)                         | [README](rust-nix/README.md)             |
-| `cpp`, `cpp-cmake`           | C++ (using `CMake`)                  | [cpp-cmake](cpp-cmake)                       | [README](cpp-cmake/README.md)            |
-| `vim`                        | Vim Plugins (using Nixpkgs builders) | [vimPlugin](vimPlugin)                       | [README](vimPlugin/README.md)            |
-| `flutter`, `flutter-nix`     | Flutter (using Nixpkgs builders)     | [flutter-nix](flutter-nix)                   | [README](flutter-nix/README.md)          |
-| `bash`, `sh`                 | Bash (using Nixpkgs builders)        | [bash](bash)                                 | [README](bash/README.md)                 |
-| `zig`                        | Zig (using Nixpkgs builders)         | [zig](zig)                                   | [README](zig/README.md)                  |
-| `bevy`                       | Bevy (using `rust-fenix-naersk`)     | [bevy](bevy)                                 | [README](bevy/README.md)                 |
-| `rust-fenix-crane`, `crane`  | Rust (using `fenix` and `crane`)     | [rust-fenix-crane](rust-fenix-crane)         | [README](rust-fenix-crane/README.md)     |
+| Type Keyword                        | Type                           | Subdirectory                                 | Documentation                            |
+| ----------------------------------- | ------------------------------ | -------------------------------------------- | ---------------------------------------- |
+| `bash`, `sh`                        | Bash using Nixpkgs Builders    | [bash](bash)                                 | [README](bash/README.md)                 |
+| `bevy`                              | Bevy using Nixpkgs Builders    | [bevy](bevy)                                 | [README](bevy/README.md)                 |
+| `cpp`, `cpp-cmake`                  | C++ using CMake                | [cpp-cmake](cpp-cmake)                       | [README](cpp-cmake/README.md)            |
+| `default`                           | Development                    | [default](default)                           | [README](default/README.md)              |
+| `flutter`, `flutter-nix`            | Flutter using Nixpkgs Builders | [flutter-nix](flutter-nix)                   | [README](flutter-nix/README.md)          |
+| `go`, `go-gomod2nix`                | Go using gomod2nix             | [go-gomod2nix](go-gomod2nix)                 | [README](go-gomod2nix/README.md)         |
+| `go-nix`                            | Go with Nixpkgs Builders       | [go-nix](go-nix)                             | [README](go-nix/README.md)               |
+| `nixpkgs`                           | Nixpkgs Development            | [nixpkgs](nixpkgs)                           | [README](nixpkgs/README.md)              |
+| `python`, `python-nix`              | Python using Nixpkgs builders  | [python-nix](python-nix)                     | [README](python-nix/README.md)           |
+| `poetry`, `python-poetry`           | Python using Poetry            | [python-poetry](python-poetry)               | [README](python-poetry/README.md)        |
+| `pyproject`, `python-pyproject-nix` | Python using Pyproject-nix     | [python-pyproject-nix](python-pyproject-nix) | [README](python-pyproject-nix/README.md) |
+| `python-uv`, `uv`                   | Python using uv2nix            | [python-uv](python-uv)                       | [README](python-uv/README.md)            |
+| `crane`, `rust-fenix-crane`         | Rust using Fenix and Crane     | [rust-fenix-crane](rust-fenix-crane)         | [README](rust-fenix-crane/README.md)     |
+| `rust`, `rust-fenix-naersk`         | Rust using Fenix and Naersk    | [rust-fenix-naersk](rust-fenix-naersk)       | [README](rust-fenix-naersk/README.md)    |
+| `rust-nix`                          | Rust using Nixpkgs Builders    | [rust-nix](rust-nix)                         | [README](rust-nix/README.md)             |
+| `vim`, `vimPlugins`                 | vimPlugins                     | [vimPlugins](vimPlugins)                     | [README](vimPlugins/README.md)           |
+| `zig`                               | Zig using Nixpkgs Builders     | [zig](zig)                                   | [README](zig/README.md)                  |
 
 ## Examples
 
