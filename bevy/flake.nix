@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     systems.url = "github:nix-systems/default";
-    naersk.url = "github:nix-community/naersk";
+    crane.url = "github:ipetkov/crane";
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,7 +14,7 @@
   outputs = {
     self,
     nixpkgs,
-    naersk,
+    crane,
     fenix,
     systems,
     ...
@@ -27,7 +27,13 @@
           fenix.overlays.default
         ];
       });
-    rust-toolchain = forEachSystem (system: pkgsFor.${system}.fenix.stable);
+    rust-toolchain = forEachSystem (system:
+      pkgsFor.${system}.fenix.stable.withComponents [
+        "cargo"
+        "llvm-tools"
+        "rustc"
+      ]);
+    craneLib = forEachSystem (system: (crane.mkLib pkgsFor.${system}).overrideToolchain rust-toolchain.${system});
 
     bevy-runtime-deps = forEachSystem (system:
       with pkgsFor.${system}; [
@@ -56,24 +62,28 @@
     formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
 
     devShells = forEachSystem (system: {
-      default = pkgsFor.${system}.mkShell {
-        packages = with rust-toolchain.${system};
-          [
-            cargo
-            rustc
-            clippy
-            rustfmt
-          ]
-          ++ all-deps.${system};
+      default = craneLib.${system}.devShell {
+        packages = all-deps.${system};
         shellHook = ''
           export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgsFor.${system}.lib.makeLibraryPath (with pkgsFor.${system}; [
             libxkbcommon
             vulkan-loader
           ])}"
         '';
-        RUST_SRC_PATH = "${rust-toolchain.${system}.rust-src}/lib/rustlib/src/rust/library";
       };
     });
     # TODO Figure out packages and apps
+    packages = forEachSystem (system: {
+      default = craneLib.${system}.buildPackage {
+        src = craneLib.${system}.cleanCargoSource ./.;
+        nativeBuildInputs = all-deps.${system};
+      };
+    });
+    apps = forEachSystem (system: {
+      default = {
+        type = "app";
+        program = "${self.packages.${system}.default}/bin/project_name";
+      };
+    });
   };
 }

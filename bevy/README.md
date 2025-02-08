@@ -30,15 +30,13 @@ Inspired from:
 - [mith:nix-templates/bevy](https://github.com/mith/nix-templates/blob/d8547e8c67b112e1e5a367a7ace69fcd0bb7e82b/bevy/flake.nix)
 - [mith:nix-templates/bevy-web](https://github.com/mith/nix-templates/blob/d8547e8c67b112e1e5a367a7ace69fcd0bb7e82b/bevy-web/flake.nix)
 
-<!-- TODO - figure out packages and apps
-### Run using `naersk` (Recommended)
+### Run using `crane` (Recommended)
 
 Run app
 
 ```shell
 nix run
 ```
--->
 
 ### Run using `Cargo`
 
