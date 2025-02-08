@@ -6,6 +6,8 @@ A collection of Nix Flake Templates
 
 ![demo](./demo.gif)
 
+**Contributors, go to [CONTRIBUTING.md](./CONTRIBUTING.md)**
+
 ## Table of Contents
 
 - [Usage](#usage)
