@@ -119,7 +119,7 @@
       python = self.templates.python-nix;
       poetry = self.templates.python-poetry;
       uv = self.templates.python-uv;
-      rust = self.templates.rust-fenix-naersk;
+      rust = self.templates.rust-fenix-crane;
       cpp = self.templates.cpp-cmake;
       go = self.templates.go-gomod2nix;
       vim = self.templates.vimPlugins;
@@ -130,7 +130,7 @@
       jq = getExe pkgsFor.${system}.jq;
       prettier = getExe pkgsFor.${system}.nodePackages.prettier;
     in
-      cli.apps
+      cli.apps.${system}
       // {
         makeTable = {
           type = "app";

@@ -8,13 +8,6 @@ Initialize using
 nix flake init --template "github:nulladmin1/nix-flake-templates#rust-fenix-naersk"
 ```
 
-OR
-Initialize using
-
-```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#rust"
-```
-
 This is how to structure of the template looks like:
 
 ```

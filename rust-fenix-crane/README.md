@@ -5,13 +5,19 @@ _All of this information is also included in the [README.md](https://github.com/
 Initialize using
 
 ```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#rust-fenix-crane"
+nix flake init --template "github:nulladmin1/nix-flake-templates#rust"
 ```
 
 OR
 
 ```shell
 nix flake init --template "github:nulladmin1/nix-flake-templates#crane"
+```
+
+OR
+
+```shell
+nix flake init --template "github:nulladmin1/nix-flake-templates#rust-fenix-crane"
 ```
 
 This is how to structure of the template looks like:

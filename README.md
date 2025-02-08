@@ -43,8 +43,8 @@ Where `${TYPE_KEYWORD}` is the supported type keyword of template:
 | `poetry`, `python-poetry`           | Python using Poetry            | [python-poetry](python-poetry)               | [README](python-poetry/README.md)        |
 | `pyproject`, `python-pyproject-nix` | Python using Pyproject-nix     | [python-pyproject-nix](python-pyproject-nix) | [README](python-pyproject-nix/README.md) |
 | `python-uv`, `uv`                   | Python using uv2nix            | [python-uv](python-uv)                       | [README](python-uv/README.md)            |
-| `crane`, `rust-fenix-crane`         | Rust using Fenix and Crane     | [rust-fenix-crane](rust-fenix-crane)         | [README](rust-fenix-crane/README.md)     |
-| `rust`, `rust-fenix-naersk`         | Rust using Fenix and Naersk    | [rust-fenix-naersk](rust-fenix-naersk)       | [README](rust-fenix-naersk/README.md)    |
+| `crane`, `rust`, `rust-fenix-crane` | Rust using Fenix and Crane     | [rust-fenix-crane](rust-fenix-crane)         | [README](rust-fenix-crane/README.md)     |
+| `rust-fenix-naersk`                 | Rust using Fenix and Naersk    | [rust-fenix-naersk](rust-fenix-naersk)       | [README](rust-fenix-naersk/README.md)    |
 | `rust-nix`                          | Rust using Nixpkgs Builders    | [rust-nix](rust-nix)                         | [README](rust-nix/README.md)             |
 | `vim`, `vimPlugins`                 | vimPlugins                     | [vimPlugins](vimPlugins)                     | [README](vimPlugins/README.md)           |
 | `zig`                               | Zig using Nixpkgs Builders     | [zig](zig)                                   | [README](zig/README.md)                  |
