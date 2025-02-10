@@ -72,7 +72,6 @@
         '';
       };
     });
-    # TODO Figure out packages and apps
     packages = forEachSystem (system: {
       default = craneLib.${system}.buildPackage {
         src = craneLib.${system}.cleanCargoSource ./.;
