@@ -44,7 +44,7 @@
             "clippy"
           ];
 
-          craneLib = forEachSystem (crane.mkLib pkgs).overrideToolchain rust-toolchain;
+          craneLib = (crane.mkLib pkgs).overrideToolchain rust-toolchain;
         });
   in {
     formatter = forEachSystem ({pkgs, ...}: pkgs.alejandra);
