@@ -12,22 +12,27 @@
     systems,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system:
+        f {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+        });
   in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
+    formatter = forEachSystem ({pkgs, ...}: pkgs.alejandra);
 
-    devShells = forEachSystem (system: {
-      default = pkgsFor.${system}.mkShell {
-        packages = with pkgsFor.${system}; [
+    devShells = forEachSystem ({pkgs, ...}: {
+      default = pkgs.mkShell {
+        packages = with pkgs; [
           rustc
           cargo
         ];
       };
     });
 
-    packages = forEachSystem (system: {
-      default = pkgsFor.${system}.rustPlatform.buildRustPackage {
+    packages = forEachSystem ({pkgs, ...}: {
+      default = pkgs.rustPlatform.buildRustPackage {
         pname = "project_name";
         version = "0.1.0";
         src = ./.;
@@ -36,10 +41,10 @@
       };
     });
 
-    apps = forEachSystem (system: {
+    apps = forEachSystem ({pkgs, ...}: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/project_name";
+        program = "${self.packages.${pkgs.system}.default}/bin/project_name";
       };
     });
   };

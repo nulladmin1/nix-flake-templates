@@ -13,28 +13,33 @@
     ...
   }: let
     inherit (nixpkgs) lib;
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system:
+        f {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+        });
   in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
+    formatter = forEachSystem ({pkgs}: pkgs.alejandra);
 
-    devShells = forEachSystem (system: {
-      default = pkgsFor.${system}.mkShell {
-        packages = with pkgsFor.${system}; [
+    devShells = forEachSystem ({pkgs}: {
+      default = pkgs.mkShell {
+        packages = with pkgs; [
           shellcheck
           shfmt
         ];
       };
     });
 
-    packages = forEachSystem (system: {
-      default = pkgsFor.${system}.writeShellScriptBin "project_name" (builtins.readFile ./hello.sh);
+    packages = forEachSystem ({pkgs}: {
+      default = pkgs.writeShellScriptBin "project_name" (builtins.readFile ./hello.sh);
     });
 
-    apps = forEachSystem (system: {
+    apps = forEachSystem ({pkgs}: {
       default = {
         type = "app";
-        program = "${lib.getExe self.packages.${system}.default}";
+        program = "${lib.getExe self.packages.${pkgs.system}.default}";
       };
     });
   };

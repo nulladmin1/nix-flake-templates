@@ -12,39 +12,54 @@
     systems,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor =
-      forEachSystem (system: import nixpkgs {inherit system;});
-    flutterPackage = forEachSystem (system: pkgsFor.${system}.flutter327);
-  in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system: let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+      in
+        f {
+          inherit pkgs;
 
-    devShells = forEachSystem (system: {
-      default = pkgsFor.${system}.mkShell {
+          flutterPackage = pkgs.flutter327;
+        });
+  in {
+    formatter = forEachSystem ({pkgs, ...}: pkgs.alejandra);
+
+    devShells = forEachSystem ({
+      pkgs,
+      flutterPackage,
+      ...
+    }: {
+      default = pkgs.mkShell {
         packages = [
           flutterPackage
         ];
       };
     });
 
-    packages = forEachSystem (system: {
-      default = flutterPackage.${system}.buildFlutterApplication {
+    packages = forEachSystem ({
+      pkgs,
+      flutterPackage,
+      ...
+    }: {
+      default = flutterPackage.buildFlutterApplication {
         pname = "project_name";
         version = "0.1.0";
         src = ./.;
-        dartSdk = pkgsFor.${system}.dart;
+        dartSdk = pkgs.dart;
         autoDepsList = true;
         autoPubspecLock = ./pubspec.lock;
       };
-      web = self.packages.${system}.default.overrideAttrs (old: {
+      web = self.packages.default.overrideAttrs (old: {
         targetFlutterPlatform = "web";
       });
     });
 
-    apps = forEachSystem (system: {
+    apps = forEachSystem ({pkgs, ...}: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/project_name";
+        program = "${self.packages.${pkgs.system}.default}/bin/project_name";
       };
     });
   };

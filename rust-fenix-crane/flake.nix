@@ -19,44 +19,58 @@
     systems,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system:
-      import nixpkgs {
-        inherit system;
-        overlays = [
-          fenix.overlays.default
-        ];
-      });
-    rust-toolchain = forEachSystem (system:
-      pkgsFor.${system}.fenix.stable.withComponents [
-        "cargo"
-        "llvm-tools"
-        "rustc"
-      ]);
-    craneLib = forEachSystem (system: (crane.mkLib pkgsFor.${system}).overrideToolchain rust-toolchain.${system});
-  in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system: let
+        pkgs = import nixpkgs {
+          inherit system;
 
-    devShells = forEachSystem (system: {
-      default = craneLib.${system}.devShell {};
+          overlays = [
+            fenix.overlays.default
+          ];
+        };
+
+        rust-toolchain = pkgs.fenix.stable.withComponents [
+          "cargo"
+          "llvm-tools"
+          "rustc"
+        ];
+      in
+        f {
+          inherit pkgs rust-toolchain;
+
+          craneLib = forEachSystem (crane.mkLib pkgs).overrideToolchain rust-toolchain;
+        });
+  in {
+    formatter = forEachSystem ({pkgs, ...}: pkgs.alejandra);
+
+    devShells = forEachSystem ({
+      pkgs,
+      craneLib,
+      ...
+    }: {
+      default = craneLib.devShell {};
     });
 
-    packages = forEachSystem (system: let
-      src = craneLib.${system}.cleanCargoSource ./.;
-      cargoArtifact = craneLib.${system}.buildDepsOnly {
+    packages = forEachSystem ({
+      pkgs,
+      craneLib,
+      ...
+    }: let
+      src = craneLib.cleanCargoSource ./.;
+      cargoArtifact = craneLib.buildDepsOnly {
         inherit src;
       };
     in {
-      default = craneLib.${system}.buildPackage {
+      default = craneLib.buildPackage {
         inherit cargoArtifact;
         inherit src;
       };
     });
 
-    apps = forEachSystem (system: {
+    apps = forEachSystem ({pkgs, ...}: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/project_name";
+        program = "${self.packages.${pkgs.system}.default}/bin/project_name";
       };
     });
   };

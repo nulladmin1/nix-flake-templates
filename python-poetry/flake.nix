@@ -22,15 +22,26 @@
     systems,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
-    poetry2nix-lib = forEachSystem (system: poetry2nix.lib.mkPoetry2Nix {pkgs = pkgsFor.${system};});
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system: let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+      in
+        f {
+          inherit pkgs;
+          poetry2nix-lib = forEachSystem (system: poetry2nix.lib.mkPoetry2Nix {inherit pkgs;});
+        });
   in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
+    formatter = forEachSystem ({pkgs, ...}: pkgs.alejandra);
 
-    devShells = forEachSystem (system: {
+    devShells = forEachSystem ({
+      pkgs,
+      poetry2nix-lib,
+      ...
+    }: {
       default =
-        (poetry2nix-lib.${system}.mkPoetryEnv {
+        (poetry2nix-lib.mkPoetryEnv {
           projectDir = ./.;
           editablePackageSources = {
             project_name = ./project_name;
@@ -38,14 +49,18 @@
         })
         .env
         .overrideAttrs (oldAttrs: {
-          buildInputs = with pkgsFor.${system}; [
+          buildInputs = with pkgs; [
             poetry
           ];
         });
     });
 
-    apps = forEachSystem (system: let
-      app = poetry2nix-lib.${system}.mkPoetryApplication {projectDir = ./.;};
+    apps = forEachSystem ({
+      pkgs,
+      poetry2nix-lib,
+      ...
+    }: let
+      app = poetry2nix-lib.mkPoetryApplication {projectDir = ./.;};
     in {
       default = {
         type = "app";

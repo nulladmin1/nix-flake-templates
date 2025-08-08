@@ -17,38 +17,52 @@
     systems,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
-    project = pyproject-nix.lib.project.loadPyproject {projectRoot = ./.;};
-
-    python = forEachSystem (system: pkgsFor.${system}.python312);
-  in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
-
-    devShells = forEachSystem (system: {
-      default = let
-        arg = project.renderers.withPackages {python = python.${system};};
-
-        pythonEnv = python.${system}.withPackages arg;
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system: let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
       in
-        pkgsFor.${system}.mkShell {
+        f {
+          inherit pkgs;
+          python = forEachSystem (system: pkgs.python312);
+        });
+    project = pyproject-nix.lib.project.loadPyproject {projectRoot = ./.;};
+  in {
+    formatter = forEachSystem ({pkgs, ...}: pkgs.alejandra);
+
+    devShells = forEachSystem ({
+      pkgs,
+      python,
+      ...
+    }: {
+      default = let
+        arg = project.renderers.withPackages {inherit python;};
+
+        pythonEnv = python.withPackages arg;
+      in
+        pkgs.mkShell {
           packages = [
             pythonEnv
           ];
         };
     });
 
-    packages = forEachSystem (system: {
+    packages = forEachSystem ({
+      pkgs,
+      python,
+      ...
+    }: {
       default = let
-        attrs = project.renderers.buildPythonPackage {python = python.${system};};
+        attrs = project.renderers.buildPythonPackage {inherit python;};
       in
-        python.${system}.pkgs.buildPythonPackage attrs;
+        python.pkgs.buildPythonPackage attrs;
     });
 
-    apps = forEachSystem (system: {
+    apps = forEachSystem ({pkgs, ...}: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/project_name";
+        program = "${self.packages.${pkgs.system}.default}/bin/project_name";
       };
     });
   };

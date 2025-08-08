@@ -20,11 +20,16 @@
     cli,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system:
+        f {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+        });
   in {
-    checks = forEachSystem (system: {
-      pre-commit-run = pre-commit-hooks.lib.${system}.run {
+    checks = forEachSystem ({pkgs, ...}: {
+      pre-commit-run = pre-commit-hooks.lib.${pkgs.system}.run {
         src = ./.;
         hooks = {
           actionlint.enable = true;
@@ -36,10 +41,10 @@
       };
     });
 
-    devShells = forEachSystem (system: {
-      default = pkgsFor.${system}.mkShell {
-        inherit (self.checks.${system}.pre-commit-run) shellHook;
-        buildInputs = self.checks.${system}.pre-commit-run.enabledPackages;
+    devShells = forEachSystem ({pkgs, ...}: {
+      default = pkgs.mkShell {
+        inherit (self.checks.${pkgs.system}.pre-commit-run) shellHook;
+        buildInputs = self.checks.${pkgs.system}.pre-commit-run.enabledPackages;
       };
     });
 
@@ -125,16 +130,16 @@
       vim = self.templates.vimPlugins;
     };
 
-    apps = forEachSystem (system: let
-      inherit (pkgsFor.${system}.lib) getExe;
-      jq = getExe pkgsFor.${system}.jq;
-      prettier = getExe pkgsFor.${system}.nodePackages.prettier;
+    apps = forEachSystem ({pkgs, ...}: let
+      inherit (pkgs.lib) getExe;
+      jq = getExe pkgs.jq;
+      prettier = getExe pkgs.nodePackages.prettier;
     in
-      cli.apps.${system}
+      cli.apps.${pkgs.system}
       // {
         makeTable = {
           type = "app";
-          program = getExe (pkgsFor.${system}.writeShellScriptBin "makeTable" ''
+          program = getExe (pkgs.writeShellScriptBin "makeTable" ''
             flake_templates=$(nix flake show --json | ${jq} '.templates')
 
             table="| Type Keyword | Type | Subdirectory | Documentation |

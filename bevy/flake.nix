@@ -19,69 +19,82 @@
     systems,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system:
-      import nixpkgs {
-        inherit system;
-        overlays = [
-          fenix.overlays.default
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system: let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            fenix.overlays.default
+          ];
+        };
+
+        rust-toolchain = pkgs.fenix.stable.withComponents [
+          "cargo"
+          "llvm-tools"
+          "rustc"
         ];
-      });
-    rust-toolchain = forEachSystem (system:
-      pkgsFor.${system}.fenix.stable.withComponents [
-        "cargo"
-        "llvm-tools"
-        "rustc"
-      ]);
-    craneLib = forEachSystem (system: (crane.mkLib pkgsFor.${system}).overrideToolchain rust-toolchain.${system});
 
-    bevy-runtime-deps = forEachSystem (system:
-      with pkgsFor.${system}; [
-        pkg-config
-        alsa-lib
-        vulkan-tools
-        vulkan-headers
-        vulkan-loader
-        vulkan-validation-layers
-        libudev-zero
-        xorg.libX11
-        xorg.libXcursor
-        xorg.libXi
-        xorg.libXrandr
-        xorg.libxcb
-        libxkbcommon
-        wayland
-      ]);
-    bevy-build-deps = forEachSystem (system:
-      with pkgsFor.${system}; [
-        clang
-        lld
-      ]);
-    all-deps = forEachSystem (system: bevy-build-deps.${system} ++ bevy-runtime-deps.${system});
+        bevy-runtime-deps = with pkgs; [
+          pkg-config
+          alsa-lib
+          vulkan-tools
+          vulkan-headers
+          vulkan-loader
+          vulkan-validation-layers
+          libudev-zero
+          xorg.libX11
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXrandr
+          xorg.libxcb
+          libxkbcommon
+          wayland
+        ];
+
+        bevy-build-deps = with pkgs; [
+          clang
+          lld
+        ];
+      in
+        f {
+          inherit pkgs;
+          craneLib = (crane.mkLib pkgs).overrideToolchain rust-toolchain;
+
+          all-deps = bevy-build-deps ++ bevy-runtime-deps;
+        });
   in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
+    formatter = forEachSystem ({pkgs, ...}: pkgs.alejandra);
 
-    devShells = forEachSystem (system: {
-      default = craneLib.${system}.devShell {
-        packages = all-deps.${system};
+    devShells = forEachSystem ({
+      pkgs,
+      craneLib,
+      all-deps,
+      ...
+    }: {
+      default = craneLib.devShell {
+        packages = all-deps;
         shellHook = ''
-          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgsFor.${system}.lib.makeLibraryPath (with pkgsFor.${system}; [
+          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.lib.makeLibraryPath (with pkgs; [
             libxkbcommon
             vulkan-loader
           ])}"
         '';
       };
     });
-    packages = forEachSystem (system: {
-      default = craneLib.${system}.buildPackage {
-        src = craneLib.${system}.cleanCargoSource ./.;
-        nativeBuildInputs = all-deps.${system};
+    packages = forEachSystem ({
+      craneLib,
+      all-deps,
+      ...
+    }: {
+      default = craneLib.buildPackage {
+        src = craneLib.cleanCargoSource ./.;
+        nativeBuildInputs = all-deps;
       };
     });
-    apps = forEachSystem (system: {
+    apps = forEachSystem ({pkgs, ...}: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/project_name";
+        program = "${self.packages.${pkgs.system}.default}/bin/project_name";
       };
     });
   };

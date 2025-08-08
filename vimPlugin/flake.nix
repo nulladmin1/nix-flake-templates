@@ -11,12 +11,17 @@
     systems,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system:
+        f {
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+        });
   in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
-    packages = forEachSystem (system: {
-      default = pkgsFor.${system}.callPackage ./default.nix {};
+    formatter = forEachSystem ({pkgs, ...}: pkgs.alejandra);
+    packages = forEachSystem ({pkgs, ...}: {
+      default = pkgs.callPackage ./default.nix {};
     });
   };
 }

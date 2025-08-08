@@ -22,30 +22,32 @@
     systems,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system:
-      import nixpkgs {
-        inherit system;
-        overlays = [
-          gomod2nix.overlays.default
-        ];
-      });
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system:
+        f {
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [
+              gomod2nix.overlays.default
+            ];
+          };
+        });
   in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
+    formatter = forEachSystem ({pkgs, ...}: pkgs.alejandra);
 
-    devShells = forEachSystem (system: let
-      goEnv = pkgsFor.${system}.mkGoEnv {pwd = ./.;};
+    devShells = forEachSystem ({pkgs, ...}: let
+      goEnv = pkgs.mkGoEnv {pwd = ./.;};
     in {
-      default = pkgsFor.${system}.mkShell {
+      default = pkgs.mkShell {
         packages = [
           goEnv
-          gomod2nix.packages.${system}.default
+          gomod2nix.packages.default
         ];
       };
     });
 
-    packages = forEachSystem (system: {
-      default = pkgsFor.${system}.buildGoApplication {
+    packages = forEachSystem ({pkgs, ...}: {
+      default = pkgs.buildGoApplication {
         pname = "project_name";
         version = "0.1.0";
         pwd = ./.;
@@ -54,10 +56,10 @@
       };
     });
 
-    apps = forEachSystem (system: {
+    apps = forEachSystem ({pkgs, ...}: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/src";
+        program = "${self.packages.${pkgs.system}.default}/bin/src";
       };
     });
   };

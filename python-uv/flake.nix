@@ -31,44 +31,54 @@
     pyproject-build-systems,
     ...
   }: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-    pkgsFor = forEachSystem (system: import nixpkgs {inherit system;});
-
     inherit (nixpkgs) lib;
 
-    workspace = uv2nix.lib.workspace.loadWorkspace {workspaceRoot = ./.;};
+    forEachSystem = f:
+      nixpkgs.lib.genAttrs (import systems) (system: let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
 
-    overlay = workspace.mkPyprojectOverlay {
-      sourcePreference = "wheel"; # or sourcePreference = "sdist";
-    };
+        python = forEachSystem (system: pkgs.python312);
 
-    pyprojectOverrides = _final: _prev: {
-    };
+        workspace = uv2nix.lib.workspace.loadWorkspace {workspaceRoot = ./.;};
 
-    python = forEachSystem (system: pkgsFor.${system}.python312);
+        overlay = workspace.mkPyprojectOverlay {
+          sourcePreference = "wheel"; # or sourcePreference = "sdist";
+        };
 
-    pythonSets = forEachSystem (
-      system:
-        (pkgsFor.${system}.callPackage pyproject-nix.build.packages {
-          python = python.${system};
-        })
-        .overrideScope
-        (lib.composeManyExtensions
-          [
-            pyproject-build-systems.overlays.default
-            overlay
-            pyprojectOverrides
-          ])
-    );
+        pyprojectOverrides = _final: _prev: {
+        };
+      in
+        f {
+          inherit pkgs python workspace;
+
+          pythonSets =
+            (pkgs.callPackage pyproject-nix.build.packages {
+              inherit python;
+            })
+            .overrideScope
+            (lib.composeManyExtensions
+              [
+                pyproject-build-systems.overlays.default
+                overlay
+                pyprojectOverrides
+              ]);
+        });
   in {
-    formatter = forEachSystem (system: pkgsFor.${system}.alejandra);
+    formatter = forEachSystem ({pkgs, ...}: pkgs.alejandra);
 
-    devShells = forEachSystem (system: {
+    devShells = forEachSystem ({
+      pkgs,
+      workspace,
+      pythonSets,
+      ...
+    }: {
       default = let
         editableOverlay = workspace.mkEditablePyprojectOverlay {
           root = "$REPO_ROOT";
         };
-        editablePythonSets = pythonSets.${system}.overrideScope (
+        editablePythonSets = pythonSets.overrideScope (
           lib.composeManyExtensions [
             editableOverlay
 
@@ -94,8 +104,8 @@
 
         virtualenv = editablePythonSets.mkVirtualEnv "project_name" workspace.deps.all;
       in
-        pkgsFor.${system}.mkShell {
-          packages = with pkgsFor.${system}; [
+        pkgs.mkShell {
+          packages = with pkgs; [
             uv
             virtualenv
           ];
@@ -113,14 +123,19 @@
         };
     });
 
-    packages = forEachSystem (system: {
-      default = pythonSets.${system}.mkVirtualEnv "project_name" workspace.deps.default;
+    packages = forEachSystem ({
+      pkgs,
+      python,
+      workspace,
+      ...
+    }: {
+      default = python.mkVirtualEnv "project_name" workspace.deps.default;
     });
 
-    apps = forEachSystem (system: {
+    apps = forEachSystem ({pkgs, ...}: {
       default = {
         type = "app";
-        program = "${self.packages.${system}.default}/bin/project_name";
+        program = "${self.packages.${pkgs.system}.default}/bin/project_name";
       };
     });
   };
