@@ -38,6 +38,12 @@
         f {
           inherit pkgs rust-toolchain;
 
+          rust-toolchain-devtools = pkgs.fenix.stable.withComponents [
+            "rust-analyzer"
+            "rustfmt"
+            "clippy"
+          ];
+
           craneLib = forEachSystem (crane.mkLib pkgs).overrideToolchain rust-toolchain;
         });
   in {
@@ -46,9 +52,12 @@
     devShells = forEachSystem ({
       pkgs,
       craneLib,
+      rust-toolchain-devtools,
       ...
     }: {
-      default = craneLib.devShell {};
+      default = craneLib.devShell {
+        buildInputs = [rust-toolchain-devtools];
+      };
     });
 
     packages = forEachSystem ({
