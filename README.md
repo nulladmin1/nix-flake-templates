@@ -38,6 +38,7 @@ Where `${TYPE_KEYWORD}` is the supported type keyword of template:
 | `flutter`, `flutter-nix`            | Flutter using Nixpkgs Builders | [flutter-nix](flutter-nix)                   | [README](flutter-nix/README.md)          |
 | `go`, `go-gomod2nix`                | Go using gomod2nix             | [go-gomod2nix](go-gomod2nix)                 | [README](go-gomod2nix/README.md)         |
 | `go-nix`                            | Go with Nixpkgs Builders       | [go-nix](go-nix)                             | [README](go-nix/README.md)               |
+| `iced`, `iced-rs`, `rust-iced`      | Iced                           | [rust-iced](rust-iced)                       | [README](rust-iced/README.md)            |
 | `nixpkgs`                           | Nixpkgs Development            | [nixpkgs](nixpkgs)                           | [README](nixpkgs/README.md)              |
 | `python`, `python-nix`              | Python using Nixpkgs builders  | [python-nix](python-nix)                     | [README](python-nix/README.md)           |
 | `poetry`, `python-poetry`           | Python using Poetry            | [python-poetry](python-poetry)               | [README](python-poetry/README.md)        |
