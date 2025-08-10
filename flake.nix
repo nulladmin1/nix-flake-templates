@@ -117,6 +117,12 @@
         description = "Nix Flake Template for Rust using Fenix and Crane";
         path = ./rust-fenix-crane;
       };
+      rust-iced = {
+        description = "Nix Flake Template for Iced";
+        path = ./rust-iced;
+      };
+      iced = self.templates.rust-iced;
+      iced-rs = self.templates.rust-iced;
       crane = self.templates.rust-fenix-crane;
       sh = self.templates.bash;
       flutter = self.templates.flutter-nix;
