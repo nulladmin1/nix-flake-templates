@@ -1,5 +1,5 @@
 {
-  description = "iced-tutorial";
+  description = "project_name";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -82,7 +82,7 @@
         };
       in
         rustPlatform.buildRustPackage {
-          pname = "iced-tutorial";
+          pname = "project_name";
           version = "0.1.0";
           src = ./.;
           cargoLock = {
@@ -101,7 +101,7 @@
     apps = forEachSystem ({pkgs, ...}: {
       default = {
         type = "app";
-        program = "${self.packages.${pkgs.system}.default}/bin/iced-tutorial";
+        program = "${self.packages.${pkgs.system}.default}/bin/project_name";
       };
     });
   };
