@@ -121,6 +121,11 @@
         description = "Nix Flake Template for Iced";
         path = ./rust-iced;
       };
+      rust-relm4 = {
+        description = "Nix Flake Template for Relm4";
+        path = ./rust-relm4;
+      };
+      relm4 = self.templates.rust-relm4;
       iced = self.templates.rust-iced;
       iced-rs = self.templates.rust-iced;
       crane = self.templates.rust-fenix-crane;
