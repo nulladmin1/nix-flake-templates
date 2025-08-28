@@ -1,40 +1,84 @@
-use iced::widget::{Column, button, column, text};
+use relm4::{
+    ComponentParts, ComponentSender, RelmApp, RelmWidgetExt, SimpleComponent,
+    gtk::{
+        self,
+        prelude::{BoxExt, ButtonExt, GtkWindowExt, OrientableExt},
+    },
+};
 
-#[derive(Debug, Clone, Copy)]
-enum Message {
-    Increment,
-    Decrement,
+fn main() {
+    let app = RelmApp::new("relm4.test.counter");
+    app.run::<Counter>(0);
 }
 
-#[derive(Default)]
 struct Counter {
     value: i64,
 }
 
-impl Counter {
-    fn update(&mut self, message: Message) {
+#[derive(Debug)]
+enum Messages {
+    Increment,
+    Decrement,
+}
+
+#[relm4::component]
+impl SimpleComponent for Counter {
+    type Init = i64;
+
+    type Input = Messages;
+    type Output = ();
+
+    view! {
+        #[root]
+            gtk::Window {
+                set_title: Some("Counter"),
+                set_default_width: 300,
+                set_default_height: 100,
+
+                gtk::Box {
+                    set_orientation: gtk::Orientation::Vertical,
+                    set_spacing: 5,
+                    set_margin_all: 5,
+
+                    gtk::Button {
+                        set_label: "Increment",
+                        connect_clicked => Messages::Increment,
+                    },
+
+                    gtk::Label {
+                        #[watch]
+                        set_label: &format!("Counter: {}", model.value),
+                        set_margin_all: 5,
+                    },
+
+                    gtk::Button::with_label("Decrement") {
+                        connect_clicked => Messages::Decrement,
+                    },
+                }
+            }
+
+    }
+
+    fn init(
+        value: Self::Init,
+        root: Self::Root,
+        sender: ComponentSender<Self>,
+    ) -> ComponentParts<Self> {
+        let model = Counter { value };
+
+        let widgets = view_output!();
+
+        ComponentParts { model, widgets }
+    }
+
+    fn update(&mut self, message: Self::Input, _sender: ComponentSender<Self>) {
         match message {
-            Message::Increment => {
+            Messages::Increment => {
                 self.value += 1;
             }
-            Message::Decrement => {
+            Messages::Decrement => {
                 self.value -= 1;
             }
         }
     }
-
-    fn view(&self) -> Column<Message> {
-        let increment: button::Button<Message> = button("+").on_press(Message::Increment);
-        let decrement: button::Button<Message> = button("-").on_press(Message::Decrement);
-
-        let counter = text(self.value);
-
-        let interface = column![increment, counter, decrement];
-
-        interface
-    }
-}
-
-fn main() -> iced::Result {
-    iced::run("A cool counter", Counter::update, Counter::view)
 }

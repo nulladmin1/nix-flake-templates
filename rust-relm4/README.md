@@ -5,25 +5,19 @@ _All of this information is also included in the [README.md](https://github.com/
 Initialize using
 
 ```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#rust-iced"
+nix flake init --template "github:nulladmin1/nix-flake-templates#rust-relm4"
 ```
 
 OR
 
 ```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#iced"
-```
-
-OR
-
-```shell
-nix flake init --template "github:nulladmin1/nix-flake-templates#iced-rs"
+nix flake init --template "github:nulladmin1/nix-flake-templates#relm4"
 ```
 
 This is how to structure of the template looks like:
 
 ```
-📦 rust-iced
+📦 rust-relm4
 ├── ⚙️ .envrc
 ├── 🙈 .gitignore
 ├── 🔒 Cargo.lock
@@ -34,7 +28,7 @@ This is how to structure of the template looks like:
     └── 🦀 main.rs
 ```
 
-It includes the Counter program seen in the [Iced-rs tutorial](https://book.iced.rs/)
+It includes the Counter program seen in the [Relm4 Tutorial](https://relm4.org/book/stable/first_app.html)
 
 **Note: This has only been tested in Wayland (Hyprland), not in X11**
 

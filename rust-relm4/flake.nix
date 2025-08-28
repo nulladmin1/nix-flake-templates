@@ -42,9 +42,13 @@
           ];
 
           deps = with pkgs; [
-            libxkbcommon
-            pkg-config
-            wayland
+            gdk-pixbuf
+            gobject-introspection
+            graphene
+            gtk4
+            libadwaita
+            polkit
+            openssl
           ];
         });
   in {
@@ -63,7 +67,8 @@
             rust-toolchain
             rust-toolchain-devtools
 
-            libcosmicAppHook
+            pkg-config
+            wrapGAppsHook4
           ]
           ++ deps;
       };
@@ -92,8 +97,8 @@
           buildInputs = deps;
 
           nativeBuildInputs = with pkgs; [
-            libcosmicAppHook
-            git # for vergen
+            pkg-config
+            wrapGAppsHook4
           ];
         };
     });
